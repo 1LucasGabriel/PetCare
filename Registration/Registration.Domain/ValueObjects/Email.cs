@@ -17,5 +17,7 @@ namespace Registration.Domain.ValueObjects
 
             Value = newEmail;
         }
+
+        protected Email() { }
     }
 }

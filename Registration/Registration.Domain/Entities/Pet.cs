@@ -12,7 +12,7 @@ namespace Registration.Domain.Entities
         public string Name { get; set; }
         public Species Species { get; set; }
         public string Breed { get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
         public decimal WeightKg { get; set; }
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; }

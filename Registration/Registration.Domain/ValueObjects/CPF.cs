@@ -22,5 +22,7 @@ namespace Registration.Domain.ValueObjects
 
             Value = newCPF;
         }
+
+        protected CPF() { }
     }
 }

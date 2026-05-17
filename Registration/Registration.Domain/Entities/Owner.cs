@@ -14,5 +14,7 @@ namespace Registration.Domain.Entities
         public string Phone { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
+        public ICollection<Pet> Pets { get; set; } = new List<Pet>();
     }
 }
