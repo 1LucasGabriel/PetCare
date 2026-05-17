@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/registration/">
+    <Project Path="registration/Registration.API/Registration.API.csproj" />
+    <Project Path="registration/Registration.Application/Registration.Application.csproj" />
+    <Project Path="registration/Registration.Domain/Registration.Domain.csproj" />
+    <Project Path="registration/Registration.Infrastructure/Registration.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/shared/">
+    <Project Path="shared/PetCare.Shared/PetCare.Shared.csproj" />
+  </Folder>
+</Solution>

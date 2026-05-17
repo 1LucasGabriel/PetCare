@@ -1,0 +1,21 @@
+﻿using Registration.Domain.Enums;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Registration.Domain.Entities
+{
+    public class Pet
+    {
+        public Guid Id { get; set; }
+        public Guid OwnerId { get; set; }
+        public string Name { get; set; }
+        public Species Species { get; set; }
+        public string Breed { get; set; }
+        public DateTime BirthDate { get; set; }
+        public decimal WeightKg { get; set; }
+        public bool IsActive { get; set; } = true;
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+    }
+}
