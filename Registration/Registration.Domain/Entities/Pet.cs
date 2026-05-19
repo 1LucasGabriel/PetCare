@@ -7,15 +7,15 @@ namespace Registration.Domain.Entities
 {
     public class Pet
     {
-        public Guid Id { get; set; }
-        public Guid OwnerId { get; set; }
-        public string Name { get; set; }
-        public Species Species { get; set; }
-        public string Breed { get; set; }
-        public DateTime? BirthDate { get; set; }
-        public decimal WeightKg { get; set; }
-        public bool IsActive { get; set; } = true;
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public Guid Id { get; private set; }
+        public Guid OwnerId { get; private set; }
+        public string Name { get; private set; }
+        public Species Species { get; private set; }
+        public string Breed { get; private set; }
+        public DateTime? BirthDate { get; private set; }
+        public decimal WeightKg { get; private set; }
+        public bool IsActive { get; private set; } = true;
+        public DateTime CreatedAt { get; private set; }
+        public DateTime UpdatedAt { get; private set; }
     }
 }
