@@ -1,4 +1,10 @@
 <Solution>
+  <Folder Name="/appointment/">
+    <Project Path="Appointment.API/Appointment.API.csproj" Id="a2e31554-a9ad-41ba-9ac8-dbef5d307426" />
+    <Project Path="Appointment.Application/Appointment.Application.csproj" Id="38139f58-ffa8-4872-ab01-2743207aea52" />
+    <Project Path="Appointment.Domain/Appointment.Domain.csproj" Id="22dbf237-9a51-4623-b002-62235bf56d36" />
+    <Project Path="Appointment.Infraestructure/Appointment.Infrastructure.csproj" Id="9b7c968b-4fb8-422b-b9b6-01be70bbfbb2" />
+  </Folder>
   <Folder Name="/registration/">
     <Project Path="registration/Registration.API/Registration.API.csproj" />
     <Project Path="registration/Registration.Application/Registration.Application.csproj" />
