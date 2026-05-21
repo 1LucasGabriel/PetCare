@@ -4,10 +4,8 @@ using MedicalRecord.Domain.Exceptions;
 
 namespace MedicalRecord.Domain.Entities;
 
-/// <summary>
-/// Aggregate Root — Prontuário Clínico
-/// Table: appt_medical_records
-/// </summary>
+// Prontuário Clínico
+// Table: appt_medical_records
 public sealed class MedicalRecord
 {
     public Guid Id { get; private set; }
@@ -21,7 +19,7 @@ public sealed class MedicalRecord
     private readonly List<IDomainEvent> _domainEvents = new();
     public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
-    private MedicalRecord() { } // EF Core
+    private MedicalRecord() { }
 
     public static MedicalRecord Create(
         Guid appointmentId,
@@ -33,15 +31,15 @@ public sealed class MedicalRecord
         DateOnly? followUpDate,
         DateTime recordedAt)
     {
-        // BR-1: Consulta deve estar CONCLUÍDA
+        // Consulta deve estar CONCLUÍDA
         if (appointmentStatus != AppointmentStatus.Completed)
             throw new AppointmentNotCompletedException(appointmentId);
 
-        // BR-2: Apenas um prontuário por consulta
+        // Apenas um prontuário por consulta
         if (alreadyExists)
             throw new DuplicateMedicalRecordException(appointmentId);
 
-        // BR-3: Diagnóstico obrigatório
+        // Diagnóstico obrigatório
         if (string.IsNullOrWhiteSpace(diagnosis))
             throw new InvalidDiagnosisException("O diagnóstico é obrigatório e não pode ser vazio.");
 
@@ -49,7 +47,7 @@ public sealed class MedicalRecord
             .Where(m => !string.IsNullOrWhiteSpace(m))
             .ToList();
 
-        // BR-4: follow_up_date deve ser futura em relação a recorded_at
+        // follow_up_date deve ser futura em relação a recorded_at
         if (followUpDate.HasValue &&
             followUpDate.Value <= DateOnly.FromDateTime(recordedAt))
             throw new InvalidFollowUpDateException(followUpDate.Value, recordedAt);
