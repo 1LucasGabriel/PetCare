@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,5 +19,7 @@ namespace Registration.Domain.ValueObjects
         }
 
         protected Email() { }
+
+        public override string ToString() => Value;
     }
 }

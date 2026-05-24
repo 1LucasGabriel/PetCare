@@ -18,7 +18,7 @@ namespace Registration.Infrastructure.Persistence.Configurations
             builder.OwnsOne(o => o.CPF, cpf =>
             {
                 cpf.Property(c => c.Value).HasColumnName("cpf").IsRequired().HasMaxLength(11);
-                cpf.HasIndex(c => c.Value).IsUnique(); 
+                cpf.HasIndex(c => c.Value).IsUnique();
             });
 
             builder.OwnsOne(o => o.Email, email =>

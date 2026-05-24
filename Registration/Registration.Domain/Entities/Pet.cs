@@ -17,5 +17,25 @@ namespace Registration.Domain.Entities
         public bool IsActive { get; private set; } = true;
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
+
+        public void Create(Guid ownerId, string name, Species species, string breed, DateTime? birthDate, decimal weightKg)
+        {
+            Id = Guid.NewGuid();
+            OwnerId = ownerId;
+            Name = name;
+            Species = species;
+            Breed = breed;
+            BirthDate = birthDate;
+            WeightKg = weightKg;
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void Update(string name, decimal weightKg)
+        {
+            Name = name;
+            WeightKg = weightKg;
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }

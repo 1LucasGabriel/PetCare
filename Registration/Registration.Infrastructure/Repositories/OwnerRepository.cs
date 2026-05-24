@@ -1,5 +1,7 @@
-﻿using Registration.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Registration.Domain.Entities;
 using Registration.Domain.Interfaces.IRepositories;
+using Registration.Domain.ValueObjects;
 using Registration.Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
@@ -16,12 +18,13 @@ namespace Registration.Infrastructure.Repositories
             _dataBase = dataBase;
         }
 
-        public void Create(Owner owner)
+        public Guid Create(Owner owner)
         {
             try
             {
                 _dataBase.Reg_Owners.Add(owner);
                 _dataBase.SaveChanges();
+                return Guid.NewGuid();
             }
             catch (Exception ex)
             {
@@ -51,6 +54,11 @@ namespace Registration.Infrastructure.Repositories
         public Owner GetById(Guid id)
         {
             return _dataBase.Reg_Owners.FirstOrDefault(owner => owner.Id == id);
+        }
+
+        public Owner? GetByEmail(Email email)
+        {
+            return _dataBase.Reg_Owners.FirstOrDefault(x => x.Email.Value == email.Value);
         }
 
         public void Update(Owner owner)

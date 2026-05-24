@@ -16,5 +16,26 @@ namespace Registration.Domain.Entities
         public DateTime UpdatedAt { get; private set; }
 
         public ICollection<Pet> Pets { get; private set; } = new List<Pet>();
+
+        public Owner(string fullName, CPF cpf, Email email, string phone)
+        {
+            Id = Guid.NewGuid();
+            FullName = fullName;
+            CPF = cpf;
+            Email = email;
+            Phone = phone;
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public Owner() { }
+
+        public void Update(string fullName, Email email, string phone)
+        {
+            FullName = fullName;
+            Email = email;
+            Phone = phone;
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }
