@@ -24,7 +24,7 @@ namespace Registration.Infrastructure.Repositories
             {
                 _dataBase.Reg_Owners.Add(owner);
                 _dataBase.SaveChanges();
-                return Guid.NewGuid();
+                return owner.Id;
             }
             catch (Exception ex)
             {
@@ -59,6 +59,11 @@ namespace Registration.Infrastructure.Repositories
         public Owner? GetByEmail(Email email)
         {
             return _dataBase.Reg_Owners.FirstOrDefault(x => x.Email.Value == email.Value);
+        }
+
+        public Owner? GetByCPF(CPF cpf)
+        {
+            return _dataBase.Reg_Owners.FirstOrDefault(x => x.CPF.Value == cpf.Value);
         }
 
         public void Update(Owner owner)

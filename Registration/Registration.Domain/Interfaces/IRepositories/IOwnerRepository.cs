@@ -11,6 +11,7 @@ namespace Registration.Domain.Interfaces.IRepositories
         public Guid Create(Owner owner);
         public Owner GetById (Guid id);
         public Owner? GetByEmail(Email email);
+        public Owner? GetByCPF(CPF cpf);
         public List<Owner> GetAll();
         public void Update(Owner owner);
         public void Delete(Guid id);

@@ -11,8 +11,12 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
 builder.Services.AddScoped<IPetRepository, PetRepository>();
+
 builder.Services.AddScoped<CreateOwnerUseCase>();
 builder.Services.AddScoped<GetAllOwnerUseCase>();
+builder.Services.AddScoped<GetOwnerUseCase>();
+builder.Services.AddScoped<UpdateOwnerUseCase>();
+builder.Services.AddScoped<DeleteOwnerUseCase>();
 
 builder.Services.AddOpenApi();
 

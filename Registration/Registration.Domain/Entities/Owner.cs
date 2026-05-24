@@ -30,9 +30,8 @@ namespace Registration.Domain.Entities
 
         public Owner() { }
 
-        public void Update(string fullName, Email email, string phone)
+        public void Update(Email email, string phone)
         {
-            FullName = fullName;
             Email = email;
             Phone = phone;
             UpdatedAt = DateTime.UtcNow;

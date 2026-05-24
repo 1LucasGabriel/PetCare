@@ -28,6 +28,12 @@ namespace Registration.Application.UseCases
                 throw new Exception("There is already a owner with this email.");
             }
 
+            Owner? userByCPF = _ownerRepository.GetByCPF(new CPF(request.CPF));
+            if (userByCPF != null)
+            {
+                throw new Exception("There is already a owner with this CPF.");
+            }
+
             var newOwner = new Owner(request.FullName, new CPF(request.CPF), new Email(request.Email), request.Phone);
 
             return _ownerRepository.Create(newOwner);

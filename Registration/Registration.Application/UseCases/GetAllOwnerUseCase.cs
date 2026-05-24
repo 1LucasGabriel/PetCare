@@ -18,7 +18,7 @@ namespace Registration.Application.UseCases
         }
         public List<OwnerResponseDTO> Run()
         {
-            return _ownerRepository.GetAll().ConvertAll(owner => new OwnerResponseDTO(owner.FullName, owner.CPF.Value, owner.Email.Value, owner.Phone));
+            return _ownerRepository.GetAll().ConvertAll(owner => new OwnerResponseDTO(owner.Id, owner.FullName, owner.CPF.Value, owner.Email.Value, owner.Phone));
         }
     }
 }
