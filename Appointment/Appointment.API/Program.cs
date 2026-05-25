@@ -1,8 +1,13 @@
-
+using Appointment.Domain.Interfaces.IRepositories;
 using Appointment.Infrastructure.Persistence;
+using Appointment.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+builder.Services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();
 
 builder.Services.AddOpenApi();
 
