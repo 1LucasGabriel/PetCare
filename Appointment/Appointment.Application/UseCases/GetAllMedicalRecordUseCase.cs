@@ -1,15 +1,14 @@
-﻿using Appointment.Application.DTOs.Response; // Assumindo o namespace do seu DTO
+﻿using Appointment.Application.DTOs.Response;
 using Appointment.Domain.Entities;
 using Appointment.Domain.Interfaces.IRepositories;
-using System.Collections.Generic;
 
 namespace Appointment.Application.UseCases
 {
-    public class GetAllMedicalRecordsUseCase
+    public class GetAllMedicalRecordUseCase
     {
         private readonly IMedicalRecordRepository _medicalRecordRepository;
 
-        public GetAllMedicalRecordsUseCase(IMedicalRecordRepository medicalRecordRepository)
+        public GetAllMedicalRecordUseCase(IMedicalRecordRepository medicalRecordRepository)
         {
             _medicalRecordRepository = medicalRecordRepository;
         }

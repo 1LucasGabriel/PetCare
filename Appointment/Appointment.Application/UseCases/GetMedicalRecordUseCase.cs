@@ -4,11 +4,11 @@ using System;
 
 namespace Appointment.Application.UseCases
 {
-    public class GetMedicalRecordByIdUseCase
+    public class GetMedicalRecordUseCase
     {
         private readonly IMedicalRecordRepository _medicalRecordRepository;
 
-        public GetMedicalRecordByIdUseCase(IMedicalRecordRepository medicalRecordRepository)
+        public GetMedicalRecordUseCase(IMedicalRecordRepository medicalRecordRepository)
         {
             _medicalRecordRepository = medicalRecordRepository;
         }
