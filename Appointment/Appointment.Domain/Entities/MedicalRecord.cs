@@ -28,7 +28,7 @@ namespace Appointment.Domain.Entities
             FollowUpDateBiggerThanRecordedAt();
         }
 
-        public void update(string diagnosis, string? treatment, List<string>? prescriptions, DateTime? followUpDate)
+        public void Update(string diagnosis, string? treatment, List<string>? prescriptions, DateTime? followUpDate)
         {
             Diagnosis = diagnosis;
             Treatment = treatment;
