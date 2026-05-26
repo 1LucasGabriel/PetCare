@@ -15,5 +15,6 @@ namespace Appointment.Infrastructure.Persistence
         }
 
         public DbSet<MedicalRecord> Reg_MedicalRecords { get; private set; }
+        public DbSet<Appointments> Reg_Appointments { get; private set; }
     }
 }
