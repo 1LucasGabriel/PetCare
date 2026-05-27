@@ -16,12 +16,13 @@ namespace Registration.Infrastructure.Repositories
             _dataBase = dataBase;
         }
 
-        public void Create(Pet pet)
+        public Guid Create(Pet pet)
         {
             try
             {
                 _dataBase.Reg_Pets.Add(pet);
                 _dataBase.SaveChanges();
+                return pet.Id;
             }
             catch (Exception ex)
             {

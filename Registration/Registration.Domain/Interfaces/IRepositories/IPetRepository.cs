@@ -7,7 +7,7 @@ namespace Registration.Domain.Interfaces.IRepositories
 {
     public interface IPetRepository
     {
-        public void Create(Pet pet);
+        public Guid Create(Pet pet);
         public Pet GetById(Guid id);
         public List<Pet> GetAll();
         public void Update(Pet pet);

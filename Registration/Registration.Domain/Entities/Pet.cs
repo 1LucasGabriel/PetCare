@@ -20,6 +20,21 @@ namespace Registration.Domain.Entities
 
         public void Create(Guid ownerId, string name, Species species, string breed, DateTime? birthDate, decimal weightKg)
         {
+            if (ownerId == Guid.Empty)
+            {
+                throw new ArgumentException("OwnerId cannot be empty.");
+            }
+
+            if (birthDate != null && birthDate > DateTime.UtcNow)
+            {
+                throw new ArgumentException("BirthDate cannot be in the future.");
+            }
+
+            if (weightKg <= 0)
+            {
+                throw new ArgumentException("Weight must be a positive value.");
+            }
+
             Id = Guid.NewGuid();
             OwnerId = ownerId;
             Name = name;
@@ -31,10 +46,16 @@ namespace Registration.Domain.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public void Update(string name, decimal weightKg)
+        public void Update(string name, decimal weightKg, bool isActive)
         {
+            if (weightKg <= 0)
+            {
+                throw new ArgumentException("Weight must be a positive value.");
+            }
+
             Name = name;
             WeightKg = weightKg;
+            IsActive = isActive;
             UpdatedAt = DateTime.UtcNow;
         }
     }

@@ -18,6 +18,12 @@ builder.Services.AddScoped<GetOwnerUseCase>();
 builder.Services.AddScoped<UpdateOwnerUseCase>();
 builder.Services.AddScoped<DeleteOwnerUseCase>();
 
+builder.Services.AddScoped<CreatePetUseCase>();
+builder.Services.AddScoped<GetAllPetsUseCase>();
+builder.Services.AddScoped<GetPetUseCase>();
+builder.Services.AddScoped<UpdatePetUseCase>();
+builder.Services.AddScoped<DeletePetUseCase>();
+
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
