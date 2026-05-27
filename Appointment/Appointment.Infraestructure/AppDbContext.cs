@@ -14,7 +14,7 @@ namespace Appointment.Infrastructure.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
 
-        public DbSet<MedicalRecord> Reg_MedicalRecords { get; private set; }
-        public DbSet<Appointments> Reg_Appointments { get; private set; }
+        public DbSet<MedicalRecord> Appo_MedicalRecords { get; private set; }
+        public DbSet<Appointments> Appo_Appointments { get; private set; }
     }
 }

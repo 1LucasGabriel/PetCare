@@ -19,7 +19,7 @@ namespace Appointment.Infrastructure.Repositories
         {
             try
             {
-                _dataBase.Reg_MedicalRecords.Add(medicalRecord);
+                _dataBase.Appo_MedicalRecords.Add(medicalRecord);
                 _dataBase.SaveChanges();
             }
             catch (Exception ex)
@@ -30,7 +30,7 @@ namespace Appointment.Infrastructure.Repositories
 
         public void Update(MedicalRecord medicalRecord)
         {
-            _dataBase.Reg_MedicalRecords.Update(medicalRecord);
+            _dataBase.Appo_MedicalRecords.Update(medicalRecord);
             _dataBase.SaveChanges();
         }
 
@@ -39,7 +39,7 @@ namespace Appointment.Infrastructure.Repositories
             try
             {
                 var medicalRecord = GetById(Id);
-                _dataBase.Reg_MedicalRecords.Remove(medicalRecord);
+                _dataBase.Appo_MedicalRecords.Remove(medicalRecord);
                 _dataBase.SaveChanges();
             }
             catch (Exception ex)
@@ -50,12 +50,12 @@ namespace Appointment.Infrastructure.Repositories
 
         public MedicalRecord GetById(Guid id)
         {
-            return _dataBase.Reg_MedicalRecords.FirstOrDefault(medicalRecord => medicalRecord.Id == id);
+            return _dataBase.Appo_MedicalRecords.FirstOrDefault(medicalRecord => medicalRecord.Id == id);
         }
 
         public List<MedicalRecord> GetAll()
         {
-            return _dataBase.Reg_MedicalRecords.ToList();
+            return _dataBase.Appo_MedicalRecords.ToList();
         }
     }
 }

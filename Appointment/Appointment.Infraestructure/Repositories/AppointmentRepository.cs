@@ -19,7 +19,7 @@ namespace Appointment.Infrastructure.Repositories
         {
             try
             {
-                _dataBase.Reg_Appointments.Add(appointment);
+                _dataBase.Appo_Appointments.Add(appointment);
                 _dataBase.SaveChanges();
             }
             catch (Exception ex)
@@ -30,7 +30,7 @@ namespace Appointment.Infrastructure.Repositories
 
         public void Update(Appointments appointment)
         {
-            _dataBase.Reg_Appointments.Update(appointment);
+            _dataBase.Appo_Appointments.Update(appointment);
             _dataBase.SaveChanges();
         }
 
@@ -39,7 +39,7 @@ namespace Appointment.Infrastructure.Repositories
             try
             {
                 var appointment = GetById(Id);
-                _dataBase.Reg_Appointments.Remove(appointment);
+                _dataBase.Appo_Appointments.Remove(appointment);
                 _dataBase.SaveChanges();
             }
             catch (Exception ex)
@@ -50,12 +50,12 @@ namespace Appointment.Infrastructure.Repositories
 
         public Appointments GetById(Guid id)
         {
-            return _dataBase.Reg_Appointments.FirstOrDefault(appointment => appointment.Id == id);
+            return _dataBase.Appo_Appointments.FirstOrDefault(appointment => appointment.Id == id);
         }
 
         public List<Appointments> GetAll()
         {
-            return _dataBase.Reg_Appointments.ToList();
+            return _dataBase.Appo_Appointments.ToList();
         }
     }
 }
