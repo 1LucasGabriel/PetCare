@@ -13,7 +13,7 @@ namespace Appointment.Domain.Entities
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
 
-        public ICollection<Appointments> Appointments { get; private set; } = new List<Appointments>();
+        public ICollection<Appointment> Appointments { get; private set; } = new List<Appointment>();
 
         public Veterinarian(string fullName, string licenseNumber, string specialty)
         {
