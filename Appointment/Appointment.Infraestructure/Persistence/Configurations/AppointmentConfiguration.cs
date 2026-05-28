@@ -20,7 +20,7 @@ namespace Appointment.Infrastructure.Persistence.Configurations
             builder.Property(a => a.Status).IsRequired().HasConversion<string>().HasMaxLength(50);
             builder.Property(a => a.Reason).IsRequired().HasMaxLength(200);
             builder.Property(a => a.Notes).IsRequired(false).HasMaxLength(500);
-            builder.Property(a => a.CancellationReason).IsRequired(false).HasMaxLength(200);
+            builder.Property(a => a.CancelReason).IsRequired(false).HasMaxLength(200);
             builder.Property(a => a.CreatedAt).IsRequired();
             builder.Property(a => a.UpdatedAt).IsRequired();
         }

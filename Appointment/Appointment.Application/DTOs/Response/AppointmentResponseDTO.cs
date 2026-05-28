@@ -16,7 +16,7 @@ namespace Appointment.Application.DTOs.Response
         public AppointmentStatus Status { get; set; }
         public string Reason { get; set; } = string.Empty;
         public string? Notes { get; set; }
-        public string? CancellationReason { get; set; }
+        public string? CancelReason { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
@@ -30,7 +30,7 @@ namespace Appointment.Application.DTOs.Response
             AppointmentStatus status,
             string reason,
             string? notes,
-            string? cancellationReason,
+            string? cancelReason,
             DateTime createdAt,
             DateTime updatedAt)
         {
@@ -43,7 +43,7 @@ namespace Appointment.Application.DTOs.Response
             Status = status;
             Reason = reason;
             Notes = notes;
-            CancellationReason = cancellationReason;
+            CancelReason = cancelReason;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
         }

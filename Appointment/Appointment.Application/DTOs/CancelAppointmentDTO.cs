@@ -6,6 +6,6 @@ namespace Appointment.Application.DTOs
 {
     public class CancelAppointmentDTO
     {
-        public string CancellationReason { get; set; } = string.Empty;
+        public string CancelReason { get; set; } = string.Empty;
     }
 }

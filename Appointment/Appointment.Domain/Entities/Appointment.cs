@@ -15,11 +15,11 @@ namespace Appointment.Domain.Entities
         public Enum Status { get; private set; }
         public string Reason { get; private set; }
         public string? Notes { get; private set; }
-        public string? CancellationReason { get; private set; }
+        public string? CancelReason { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
 
-        public Appointments(Guid petId, Guid ownerId, Guid veterinarianId, DateTime scheduleStart, DateTime scheduleEnd, Enum status, string reason, string? notes = null, string? cancellationReason = null)
+        public Appointments(Guid petId, Guid ownerId, Guid veterinarianId, DateTime scheduleStart, DateTime scheduleEnd, Enum status, string reason, string? notes = null, string? cancelReason = null)
         {
             Id = Guid.NewGuid();
             PetId = petId;
@@ -30,21 +30,21 @@ namespace Appointment.Domain.Entities
             Status = status;
             Reason = reason;
             Notes = notes;
-            CancellationReason = cancellationReason;
+            CancelReason = cancelReason;
             CreatedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
             ScheduleEndBiggerThanScheduleStart();
             ScheduleStartBiggerThanNow();
         }
 
-        public void Update(DateTime scheduleStart, DateTime scheduleEnd, Enum status, string reason, string? notes = null, string? cancellationReason = null)
+        public void Update(DateTime scheduleStart, DateTime scheduleEnd, Enum status, string reason, string? notes = null, string? cancelReason = null)
         {
             ScheduleStart = scheduleStart;
             ScheduleEnd = scheduleEnd;
             Status = status;
             Reason = reason;
             Notes = notes;
-            CancellationReason = cancellationReason;
+            CancelReason = cancelReason;
             UpdatedAt = DateTime.UtcNow;
             ScheduleEndBiggerThanScheduleStart();
             ScheduleStartBiggerThanNow();
