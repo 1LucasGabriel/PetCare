@@ -7,12 +7,12 @@ namespace Appointment.Application.UseCases
     public class CreateMedicalRecordUseCase
     {
         private readonly IMedicalRecordRepository _medicalRecordRepository;
-        private readonly IAppointmentRepository _appointmentRepository;
+        //private readonly IAppointmentRepository _appointmentRepository;
 
-        public CreateMedicalRecordUseCase(IMedicalRecordRepository medicalRecordRepository, IAppointmentRepository appointmentRepository)
+        public CreateMedicalRecordUseCase(IMedicalRecordRepository medicalRecordRepository)
         {
             _medicalRecordRepository = medicalRecordRepository;
-            _appointmentRepository = appointmentRepository;
+            //_appointmentRepository = appointmentRepository;
         }
 
         public Guid Run(CreateMedicalRecordDTO request)
@@ -23,13 +23,13 @@ namespace Appointment.Application.UseCases
             if (request.AppointmentId == Guid.Empty)
                 throw new ArgumentException("O ID da consulta é obrigatório.");
 
-            var appointment = _appointmentRepository.GetById(request.AppointmentId);
+            //var appointment = _appointmentRepository.GetById(request.AppointmentId);
 
-            if (appointment == null)
-                throw new InvalidOperationException("A consulta informada não foi encontrada.");
+            //if (appointment == null)
+            //    throw new InvalidOperationException("A consulta informada não foi encontrada.");
 
-            if (appointment.Status != AppointmentStatus.Completed)
-                throw new InvalidOperationException("O prontuário médico só pode ser criado para consultas concluídas.");
+            //if (appointment.Status != AppointmentStatus.Completed)
+                //throw new InvalidOperationException("O prontuário médico só pode ser criado para consultas concluídas.");
 
             var medicalRecord = new MedicalRecord();
 
