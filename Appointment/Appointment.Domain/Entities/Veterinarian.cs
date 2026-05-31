@@ -28,14 +28,14 @@ namespace Appointment.Domain.Entities
                 throw new ArgumentException("CRMV não pode estar vazio.");
             }
 
-            if (Email.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(email.Value))
             {
-                throw new ArgumentoException("Email não pode estar vazio.");
+                throw new ArgumentException("Email não pode estar vazio.");
             }
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                throw new ArgumentoException("Senha não pode estar vazio.");
+                throw new ArgumentException("Senha não pode estar vazio.");
             }
 
             Id = Guid.NewGuid();
