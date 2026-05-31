@@ -1,4 +1,4 @@
-﻿using Registration.Application.DTOs;
+using Registration.Application.DTOs;
 using Registration.Domain.Interfaces.IRepositories;
 using Registration.Domain.ValueObjects;
 using System;
@@ -24,7 +24,7 @@ namespace Registration.Application.UseCases
                 throw new Exception("Owner not found.");
             }
 
-            owner.Update(new Email(request.Email), request.Phone);
+            owner.Update(new Email(request.Email), request.Phone, request.Password);
             _ownerRepository.Update(owner);
             return true;
         }

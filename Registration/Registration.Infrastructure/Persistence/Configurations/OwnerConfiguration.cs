@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Registration.Domain.Entities;
 using System;
@@ -26,6 +26,7 @@ namespace Registration.Infrastructure.Persistence.Configurations
                 email.Property(e => e.Value).HasColumnName("email").IsRequired().HasMaxLength(256);
             });
 
+            builder.Property(o => o.Password).IsRequired().HasMaxLength(255);
             builder.Property(o => o.Phone).HasMaxLength(20);
             builder.Property(o => o.CreatedAt).IsRequired();
             builder.Property(o => o.UpdatedAt).IsRequired();
