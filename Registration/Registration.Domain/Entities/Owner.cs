@@ -11,18 +11,20 @@ namespace Registration.Domain.Entities
         public string FullName { get; private set; }
         public CPF CPF { get; private set; }
         public Email Email { get; private set; }
+        public string Password { get; private set; }
         public string Phone { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
 
         public ICollection<Pet> Pets { get; private set; } = new List<Pet>();
 
-        public Owner(string fullName, CPF cpf, Email email, string phone)
+        public Owner(string fullName, CPF cpf, Email email, string password, string phone)
         {
             Id = Guid.NewGuid();
             FullName = fullName;
             CPF = cpf;
             Email = email;
+            Password = password;
             Phone = phone;
             CreatedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
@@ -30,10 +32,11 @@ namespace Registration.Domain.Entities
 
         public Owner() { }
 
-        public void Update(Email email, string phone)
+        public void Update(Email email, string phone, string password)
         {
             Email = email;
             Phone = phone;
+            Password = password;
             UpdatedAt = DateTime.UtcNow;
         }
     }
