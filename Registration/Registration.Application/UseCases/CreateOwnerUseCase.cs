@@ -1,4 +1,4 @@
-﻿using Registration.Application.DTOs;
+using Registration.Application.DTOs;
 using Registration.Domain.Entities;
 using Registration.Domain.Interfaces.IRepositories;
 using Registration.Domain.ValueObjects;
@@ -34,7 +34,7 @@ namespace Registration.Application.UseCases
                 throw new Exception("There is already a owner with this CPF.");
             }
 
-            var newOwner = new Owner(request.FullName, new CPF(request.CPF), new Email(request.Email), request.Phone);
+            var newOwner = new Owner(request.FullName, new CPF(request.CPF), new Email(request.Email), request.Password, request.Phone);
 
             return _ownerRepository.Create(newOwner);
         }
