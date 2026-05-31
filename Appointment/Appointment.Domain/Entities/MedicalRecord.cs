@@ -14,7 +14,7 @@ namespace Appointment.Domain.Entities
         public DateTime? FollowUpDate { get; private set; }
         public DateTime RecordedAt { get; private set; }
 
-        //public ICollection<Appointment> Appointments { get; private set; } = new List<Appointment>();
+        public ICollection<Appointments> Appointments { get; private set; } = new List<Appointments>();
 
         public void VerifyDiagnosis()
         {

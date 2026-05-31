@@ -15,8 +15,8 @@ namespace Appointment.Infrastructure.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
 
-        public DbSet<Appointment.Domain.Entities.Appointments> Apt_Appointments { get; private set; }
-        public DbSet<Veterinarian> Apt_Veterinarians { get; private set; }
-        public DbSet<MedicalRecord> Apt_MedicalRecords { get; private set; }
+        public DbSet<Appointment.Domain.Entities.Appointments> Appo_Appointments { get; private set; }
+        public DbSet<Veterinarian> Appo_Veterinarians { get; private set; }
+        public DbSet<MedicalRecord> Appo_MedicalRecords { get; private set; }
     }
 }

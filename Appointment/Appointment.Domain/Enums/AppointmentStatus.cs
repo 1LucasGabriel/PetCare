@@ -4,10 +4,12 @@ using System.Text;
 
 namespace Appointment.Domain.Enums
 {
-    public enum Status
+    public enum AppointmentStatus
     {
-        Scheduled,
-        InProgress,
-        Cancelled
+        Scheduled = 0,
+        InProgress = 1,
+        Completed = 2,
+        Cancelled = 3,
+        NoShow = 4
     }
 }

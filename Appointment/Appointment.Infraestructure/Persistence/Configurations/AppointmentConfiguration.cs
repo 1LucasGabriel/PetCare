@@ -2,7 +2,7 @@
 using Appointment.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-/*
+
 namespace Appointment.Infrastructure.Persistence.Configurations
 {
     public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment.Domain.Entities.Appointments>
@@ -24,7 +24,7 @@ namespace Appointment.Infrastructure.Persistence.Configurations
             builder.Property(a => a.CreatedAt).IsRequired();
             builder.Property(a => a.UpdatedAt).IsRequired();
 
-            builder.HasOne(a => a.Veterinary)
+            builder.HasOne(a => a.Veterinarian)
                 .WithMany(v => v.Appointments)
                 .HasForeignKey(a => a.VeterinarianId)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -37,4 +37,3 @@ namespace Appointment.Infrastructure.Persistence.Configurations
         }
     }
 }
-*/
