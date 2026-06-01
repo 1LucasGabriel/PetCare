@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Appointment.Domain.Entities;
 using System;
@@ -16,7 +16,7 @@ namespace Appointment.Infrastructure.Persistence.Configurations
             builder.Property(m => m.AppointmentId).IsRequired();
             builder.Property(m => m.Diagnosis).IsRequired().HasMaxLength(100);
             builder.Property(m => m.Treatment).HasMaxLength(100);
-            builder.Property(m => m.Prescriptions).HasConversion<string>().HasMaxLength(500);
+            builder.Property(m => m.PrescribedMedications).HasConversion<string>().HasMaxLength(500);
             builder.Property(m => m.FollowUpDate).IsRequired(false);
             builder.Property(m => m.RecordedAt).IsRequired();
         }

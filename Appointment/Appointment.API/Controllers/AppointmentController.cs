@@ -105,19 +105,19 @@ namespace Appointment.API.Controllers
             }
         }
 
-        [HttpPatch("{id}/cancel")]
-        public IActionResult Cancel(Guid id, [FromBody] CancelAppointmentDTO request)
-        {
-            try
-            {
-                _cancelAppointmentUseCase.Run(id, request);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        //[HttpPatch("{id}/cancel")]
+        //public IActionResult Cancel(Guid id, [FromBody] CancelAppointmentDTO request)
+        //{
+        //    try
+        //    {
+        //        _cancelAppointmentUseCase.Run(id, request);
+        //        return Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)

@@ -1,8 +1,11 @@
 ﻿using Appointment.Domain.Enums;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Appointment.Domain.Entities
 {
-    public class Appointments
+    public class AppointmentEntity
     {
         public Guid Id { get; private set; }
         public Guid PetId { get; private set; }
@@ -20,17 +23,24 @@ namespace Appointment.Domain.Entities
         public Veterinarian? Veterinarian { get; private set; }
         public MedicalRecord? MedicalRecord { get; private set; }
 
-        public Appointments(
-            Guid petId,
-            Guid ownerId,
-            Guid veterinarianId,
-            DateTime scheduleStart,
-            DateTime scheduleEnd,
-            AppointmentStatus status,
-            string reason,
-            string? notes = null,
-            string? cancelReason = null)
+        public AppointmentEntity(Guid petId, Guid ownerId, Guid veterinarianId, DateTime scheduleStart, DateTime scheduleEnd, AppointmentStatus status, string reason, string? notes = null, string? cancelReason = null)
         {
+
+            if (scheduleEnd <= scheduleStart)
+            {
+                throw new ArgumentException("Data de término deve ser posterior à data de início.");
+            }
+
+            if (scheduleStart == scheduleEnd)
+            {
+                throw new ArgumentException("Data de início e término devem ser diferentes.");
+            }
+
+            if (scheduleStart <= DateTime.UtcNow)
+            {
+                throw new ArgumentException("Data de início deve ser futura.");
+            }
+
             Id = Guid.NewGuid();
             PetId = petId;
             OwnerId = ownerId;
@@ -43,17 +53,9 @@ namespace Appointment.Domain.Entities
             CancelReason = cancelReason;
             CreatedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
-            ScheduleEndBiggerThanScheduleStart();
-            ScheduleStartBiggerThanNow();
         }
 
-        public void Update(
-            DateTime scheduleStart,
-            DateTime scheduleEnd,
-            AppointmentStatus status,
-            string reason,
-            string? notes = null,
-            string? cancelReason = null)
+        public void Update(DateTime scheduleStart, DateTime scheduleEnd, AppointmentStatus status, string reason, string? notes = null, string? cancelReason = null)
         {
             ScheduleStart = scheduleStart;
             ScheduleEnd = scheduleEnd;
@@ -62,22 +64,8 @@ namespace Appointment.Domain.Entities
             Notes = notes;
             CancelReason = cancelReason;
             UpdatedAt = DateTime.UtcNow;
-            ScheduleEndBiggerThanScheduleStart();
-            ScheduleStartBiggerThanNow();
         }
 
-        public void ScheduleEndBiggerThanScheduleStart()
-        {
-            if (ScheduleEnd <= ScheduleStart)
-                throw new ArgumentException("Data de término deve ser posterior à data de início.");
-        }
-
-        public void ScheduleStartBiggerThanNow()
-        {
-            if (ScheduleStart <= DateTime.UtcNow)
-                throw new ArgumentException("Data de início deve ser futura.");
-        }
-
-        public Appointments() { }
+        public AppointmentEntity() { }
     }
 }

@@ -10,19 +10,18 @@ namespace Appointment.Domain.Entities
         public Guid AppointmentId { get; private set; }
         public string Diagnosis { get; private set; }
         public string? Treatment { get; private set; }
-        public List<string>? Prescriptions { get; private set; }
+        public List<string>? PrescribedMedications { get; private set; }
         public DateTime? FollowUpDate { get; private set; }
         public DateTime RecordedAt { get; private set; }
 
-        public ICollection<Appointments> Appointments { get; private set; } = new List<Appointments>();
-        //public ICollection<Appointment> Appointments { get; private set; } = new List<Appointment>();
+        public ICollection<AppointmentEntity> Appointments { get; private set; } = new List<AppointmentEntity>();
         public void Create(Guid appointmentId, string diagnosis, string? treatment, List<string>? prescriptions, DateTime? followUpDate)
         {
             Id = Guid.NewGuid();
             AppointmentId = appointmentId;
             Diagnosis = diagnosis;
             Treatment = treatment;
-            Prescriptions = prescriptions;
+            PrescribedMedications = prescriptions;
             FollowUpDate = followUpDate;
             RecordedAt = DateTime.UtcNow;
             VerifyDiagnosis();
@@ -33,7 +32,7 @@ namespace Appointment.Domain.Entities
         {
             Diagnosis = diagnosis;
             Treatment = treatment;
-            Prescriptions = prescriptions;
+            PrescribedMedications = prescriptions;
             FollowUpDate = followUpDate;
             VerifyDiagnosis();
             FollowUpDateBiggerThanRecordedAt();

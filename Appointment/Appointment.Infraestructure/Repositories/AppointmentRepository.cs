@@ -1,4 +1,4 @@
-﻿using Appointment.Domain.Entities;
+using Appointment.Domain.Entities;
 using Appointment.Domain.Interfaces.IRepositories;
 using Appointment.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -14,11 +14,11 @@ namespace Appointment.Infrastructure.Repositories
             _dataBase = dataBase;
         }
 
-        public Guid Create(Appointments appointment)
+        public Guid Create(AppointmentEntity appointment)
         {
             try
             {
-                _dataBase.Appo_Appointments.Add(appointment);
+                _dataBase.Appt_Appointment.Add(appointment);
                 _dataBase.SaveChanges();
                 return appointment.Id;
             }
@@ -28,38 +28,38 @@ namespace Appointment.Infrastructure.Repositories
             }
         }
 
-        public Appointments? GetById(Guid id)
+        public AppointmentEntity? GetById(Guid id)
         {
-            return _dataBase.Appo_Appointments
+            return _dataBase.Appt_Appointment
                 .Include(a => a.Veterinarian)
                 .Include(a => a.MedicalRecord)
                 .FirstOrDefault(a => a.Id == id);
         }
 
-        public List<Appointments> GetAll()
+        public List<AppointmentEntity> GetAll()
         {
-            return _dataBase.Appo_Appointments
+            return _dataBase.Appt_Appointment
                 .Include(a => a.Veterinarian)
                 .ToList();
         }
 
-        public List<Appointments> GetByVeterinarianId(Guid veterinarianId)
+        public List<AppointmentEntity> GetByVeterinarianId(Guid veterinarianId)
         {
-            return _dataBase.Appo_Appointments
+            return _dataBase.Appt_Appointment
                 .Where(a => a.VeterinarianId == veterinarianId)
                 .ToList();
         }
 
-        public List<Appointments> GetByPetId(Guid petId)
+        public List<AppointmentEntity> GetByPetId(Guid petId)
         {
-            return _dataBase.Appo_Appointments
+            return _dataBase.Appt_Appointment
                 .Where(a => a.PetId == petId)
                 .ToList();
         }
 
-        public void Update(Appointments appointment)
+        public void Update(AppointmentEntity appointment)
         {
-            _dataBase.Appo_Appointments.Update(appointment);
+            _dataBase.Appt_Appointment.Update(appointment);
             _dataBase.SaveChanges();
         }
 
@@ -70,7 +70,7 @@ namespace Appointment.Infrastructure.Repositories
                 var appointment = GetById(id);
                 if (appointment != null)
                 {
-                    _dataBase.Appo_Appointments.Remove(appointment);
+                    _dataBase.Appt_Appointment.Remove(appointment);
                     _dataBase.SaveChanges();
                 }
             }

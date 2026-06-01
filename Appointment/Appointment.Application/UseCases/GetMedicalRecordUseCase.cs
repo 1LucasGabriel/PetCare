@@ -1,4 +1,4 @@
-﻿using Appointment.Application.DTOs.Response;
+using Appointment.Application.DTOs.Response;
 using Appointment.Domain.Interfaces.IRepositories;
 using System;
 
@@ -26,7 +26,7 @@ namespace Appointment.Application.UseCases
                 medicalRecord.Id,
                 medicalRecord.Diagnosis,
                 medicalRecord.Treatment,
-                medicalRecord.Prescriptions,
+                medicalRecord.PrescribedMedications,
                 medicalRecord.AppointmentId,
                 medicalRecord.FollowUpDate,
                 medicalRecord.RecordedAt

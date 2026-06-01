@@ -15,6 +15,7 @@ namespace Appointment.Domain.Entities
         public List<string>? Specialties { get; private set; }
         public bool IsActive { get; private set; }
         public DateTime CreatedAt { get; private set; }
+        public DateTime UpdatedAt { get; private set; }
 
         public void Create(string fullName, string crmv, Email email, string password, List<string>? specialties)
         {
@@ -46,6 +47,7 @@ namespace Appointment.Domain.Entities
             Specialties = specialties;
             IsActive = true;
             CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         public void Update(Email email, string password, List<string>? specialties)
@@ -53,11 +55,13 @@ namespace Appointment.Domain.Entities
             Email = email;
             Password = password;
             Specialties = specialties;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         public void Activate()
         {
             IsActive = true;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         public void Deactivate(bool hasScheduledOrInProgressAppointments)
@@ -68,6 +72,7 @@ namespace Appointment.Domain.Entities
             }
 
             IsActive = false;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         public void VerifyCanBeAssignedToAppointment()

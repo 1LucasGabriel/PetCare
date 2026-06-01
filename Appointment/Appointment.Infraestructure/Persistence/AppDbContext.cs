@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Appointment.Domain.Entities;
@@ -15,8 +15,8 @@ namespace Appointment.Infrastructure.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
 
-        public DbSet<Appointments> Appo_Appointments { get; private set; }
-        public DbSet<Veterinarian> Appo_Veterinarians { get; private set; }
-        public DbSet<MedicalRecord> Appo_MedicalRecords { get; private set; }
+        public DbSet<AppointmentEntity> Appt_Appointment { get; private set; }
+        public DbSet<Veterinarian> Appt_Veterinarians { get; private set; }
+        public DbSet<MedicalRecord> Appt_MedicalRecords { get; private set; }
     }
 }

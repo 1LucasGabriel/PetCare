@@ -46,7 +46,7 @@ namespace Appointment.Application.UseCases
             if (petConflict)
                 throw new InvalidOperationException("O pet já possui uma consulta neste horário.");
 
-            var appointment = new Appointments(
+            var appointment = new AppointmentEntity(
                 request.PetId,
                 request.OwnerId,
                 request.VeterinarianId,

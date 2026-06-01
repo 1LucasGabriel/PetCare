@@ -1,13 +1,13 @@
-﻿using Appointment.Domain.Entities;
+using Appointment.Domain.Entities;
 using Appointment.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Appointment.Infrastructure.Persistence.Configurations
 {
-    public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment.Domain.Entities.Appointments>
+    public class AppointmentConfiguration : IEntityTypeConfiguration<AppointmentEntity>
     {
-        public void Configure(EntityTypeBuilder<Appointment.Domain.Entities.Appointments> builder)
+        public void Configure(EntityTypeBuilder<AppointmentEntity> builder)
         {
             builder.ToTable("apt_appointments");
             builder.HasKey(a => a.Id);
@@ -25,7 +25,7 @@ namespace Appointment.Infrastructure.Persistence.Configurations
             builder.Property(a => a.UpdatedAt).IsRequired();
 
             builder.HasOne(a => a.Veterinarian)
-                .WithMany(v => v.Appointments)
+                .WithMany()
                 .HasForeignKey(a => a.VeterinarianId)
                 .OnDelete(DeleteBehavior.Restrict);
 

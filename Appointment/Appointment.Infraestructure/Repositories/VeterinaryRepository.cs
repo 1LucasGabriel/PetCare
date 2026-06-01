@@ -17,7 +17,7 @@ namespace Appointment.Infrastructure.Repositories
         {
             try
             {
-                _dataBase.Appo_Veterinarians.Add(veterinarian);
+                _dataBase.Appt_Veterinarians.Add(veterinarian);
                 _dataBase.SaveChanges();
                 return veterinarian.Id;
             }
@@ -29,17 +29,17 @@ namespace Appointment.Infrastructure.Repositories
 
         public Veterinarian? GetById(Guid id)
         {
-            return _dataBase.Appo_Veterinarians.FirstOrDefault(v => v.Id == id);
+            return _dataBase.Appt_Veterinarians.FirstOrDefault(v => v.Id == id);
         }
 
         public List<Veterinarian> GetAll()
         {
-            return _dataBase.Appo_Veterinarians.ToList();
+            return _dataBase.Appt_Veterinarians.ToList();
         }
 
         public void Update(Veterinarian veterinarian)
         {
-            _dataBase.Appo_Veterinarians.Update(veterinarian);
+            _dataBase.Appt_Veterinarians.Update(veterinarian);
             _dataBase.SaveChanges();
         }
 
@@ -50,7 +50,7 @@ namespace Appointment.Infrastructure.Repositories
                 var veterinarian = GetById(id);
                 if (veterinarian != null)
                 {
-                    _dataBase.Appo_Veterinarians.Remove(veterinarian);
+                    _dataBase.Appt_Veterinarians.Remove(veterinarian);
                     _dataBase.SaveChanges();
                 }
             }
