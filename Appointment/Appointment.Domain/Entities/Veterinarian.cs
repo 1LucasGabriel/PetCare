@@ -1,4 +1,4 @@
-﻿using Appointment.Domain.ValueObjects;
+using Appointment.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Text;
