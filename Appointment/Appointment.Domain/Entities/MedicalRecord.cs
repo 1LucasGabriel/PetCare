@@ -15,6 +15,29 @@ namespace Appointment.Domain.Entities
         public DateTime RecordedAt { get; private set; }
 
         public ICollection<Appointments> Appointments { get; private set; } = new List<Appointments>();
+        //public ICollection<Appointment> Appointments { get; private set; } = new List<Appointment>();
+        public void Create(Guid appointmentId, string diagnosis, string? treatment, List<string>? prescriptions, DateTime? followUpDate)
+        {
+            Id = Guid.NewGuid();
+            AppointmentId = appointmentId;
+            Diagnosis = diagnosis;
+            Treatment = treatment;
+            Prescriptions = prescriptions;
+            FollowUpDate = followUpDate;
+            RecordedAt = DateTime.UtcNow;
+            VerifyDiagnosis();
+            FollowUpDateBiggerThanRecordedAt();
+        }
+
+        public void Update(string diagnosis, string? treatment, List<string>? prescriptions, DateTime? followUpDate)
+        {
+            Diagnosis = diagnosis;
+            Treatment = treatment;
+            Prescriptions = prescriptions;
+            FollowUpDate = followUpDate;
+            VerifyDiagnosis();
+            FollowUpDateBiggerThanRecordedAt();
+        }
 
         public void VerifyDiagnosis()
         {

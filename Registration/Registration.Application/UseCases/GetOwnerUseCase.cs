@@ -16,6 +16,11 @@ namespace Registration.Application.UseCases
         public OwnerResponseDTO Run(Guid id)
         {
             var owner = _ownerRepository.GetById(id);
+
+            if (owner == null) { 
+                throw new Exception("Owner not found.");
+            }
+
             return new OwnerResponseDTO(owner.Id, owner.FullName, owner.CPF.Value, owner.Email.Value, owner.Phone);
         }
     }
