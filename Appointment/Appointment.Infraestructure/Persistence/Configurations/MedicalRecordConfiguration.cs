@@ -11,7 +11,7 @@ namespace Appointment.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<MedicalRecord> builder)
         {
-            builder.ToTable("appo_medicalrecords");
+            builder.ToTable("appt_medicalrecords");
             builder.HasKey(m => m.Id);
             builder.Property(m => m.AppointmentId).IsRequired();
             builder.Property(m => m.Diagnosis).IsRequired().HasMaxLength(100);

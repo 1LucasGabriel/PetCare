@@ -9,7 +9,7 @@ namespace Appointment.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<AppointmentEntity> builder)
         {
-            builder.ToTable("apt_appointments");
+            builder.ToTable("appt_appointments");
             builder.HasKey(a => a.Id);
 
             builder.Property(a => a.PetId).IsRequired();

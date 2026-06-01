@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,7 +14,6 @@ namespace Appointment.Domain.Entities
         public DateTime? FollowUpDate { get; private set; }
         public DateTime RecordedAt { get; private set; }
 
-        public ICollection<AppointmentEntity> Appointments { get; private set; } = new List<AppointmentEntity>();
         public void Create(Guid appointmentId, string diagnosis, string? treatment, List<string>? prescriptions, DateTime? followUpDate)
         {
             Id = Guid.NewGuid();
