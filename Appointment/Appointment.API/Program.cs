@@ -21,6 +21,12 @@ builder.Services.AddScoped<GetAppointmentUseCase>();
 builder.Services.AddScoped<GetAllAppointmentsUseCase>();
 builder.Services.AddScoped<StartAppointmentUseCase>();
 builder.Services.AddScoped<CheckFutureAppointmentsUseCase>();
+builder.Services.AddScoped<CreateVeterinarianUseCase>();
+builder.Services.AddScoped<GetVeterinarianUseCase>();
+builder.Services.AddScoped<GetAllVeterinariansUseCase>();
+builder.Services.AddScoped<UpdateVeterinarianUseCase>();
+builder.Services.AddScoped<DeleteVeterinarianUseCase>();
+builder.Services.AddScoped<LoginVeterinarianUseCase>();
 
 builder.Services.AddScoped<DeleteMedicalRecordUseCase>();
 builder.Services.AddScoped<CreateMedicalRecordUseCase>();

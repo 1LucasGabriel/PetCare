@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Registration.Application.DTOs;
 using Registration.Application.DTOs.Response;
 using Registration.Application.UseCases;
@@ -14,13 +14,35 @@ namespace Registration.API.Controllers
         private readonly GetOwnerUseCase _getOwnerUseCase;
         private readonly UpdateOwnerUseCase _updateOwnerUseCase;
         private readonly DeleteOwnerUseCase _deleteOwnerUseCase;
-        public OwnerController(CreateOwnerUseCase createOwnerUseCase, GetAllOwnerUseCase getAllOwnerUseCase, GetOwnerUseCase getOwnerUseCase, UpdateOwnerUseCase updateOwnerUseCase, DeleteOwnerUseCase deleteOwnerUseCase)
+        private readonly LoginOwnerUseCase _loginOwnerUseCase;
+        public OwnerController(
+            CreateOwnerUseCase createOwnerUseCase,
+            GetAllOwnerUseCase getAllOwnerUseCase,
+            GetOwnerUseCase getOwnerUseCase,
+            UpdateOwnerUseCase updateOwnerUseCase,
+            DeleteOwnerUseCase deleteOwnerUseCase,
+            LoginOwnerUseCase loginOwnerUseCase)
         {
             _createOwnerUseCase = createOwnerUseCase;
             _getAllOwnerUseCase = getAllOwnerUseCase;
             _getOwnerUseCase = getOwnerUseCase;
             _updateOwnerUseCase = updateOwnerUseCase;
             _deleteOwnerUseCase = deleteOwnerUseCase;
+            _loginOwnerUseCase = loginOwnerUseCase;
+        }
+
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginDTO request)
+        {
+            try
+            {
+                var response = _loginOwnerUseCase.Run(request);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]

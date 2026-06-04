@@ -19,6 +19,7 @@ builder.Services.AddScoped<GetAllOwnerUseCase>();
 builder.Services.AddScoped<GetOwnerUseCase>();
 builder.Services.AddScoped<UpdateOwnerUseCase>();
 builder.Services.AddScoped<DeleteOwnerUseCase>();
+builder.Services.AddScoped<LoginOwnerUseCase>();
 
 builder.Services.AddScoped<CreatePetUseCase>();
 builder.Services.AddScoped<GetAllPetsUseCase>();
