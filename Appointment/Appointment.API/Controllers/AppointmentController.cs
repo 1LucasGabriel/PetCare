@@ -12,6 +12,9 @@ namespace Appointment.API.Controllers
         private readonly CreateAppointmentUseCase _createAppointmentUseCase;
         private readonly GetAllAppointmentsUseCase _getAllAppointmentsUseCase;
         private readonly GetAppointmentUseCase _getAppointmentUseCase;
+        private readonly GetAppointmentByVeterinarianUseCase _getAppointmentsByVeterinarianUseCase;
+        private readonly GetAppointmentByPetUseCase _getAppointmentsByPetUseCase;
+        private readonly GetAppointmentsByOwnerUseCase _getAppointmentsByOwnerUseCase;
         private readonly StartAppointmentUseCase _startAppointmentUseCase;
         private readonly CompleteAppointmentUseCase _completeAppointmentUseCase;
         private readonly CancelAppointmentUseCase _cancelAppointmentUseCase;
@@ -21,6 +24,9 @@ namespace Appointment.API.Controllers
             CreateAppointmentUseCase createAppointmentUseCase,
             GetAllAppointmentsUseCase getAllAppointmentsUseCase,
             GetAppointmentUseCase getAppointmentUseCase,
+            GetAppointmentByVeterinarianUseCase getAppointmentsByVeterinarianUseCase,
+            GetAppointmentByPetUseCase getAppointmentsByPetUseCase,
+            GetAppointmentsByOwnerUseCase getAppointmentsByOwnerUseCase,
             StartAppointmentUseCase startAppointmentUseCase,
             CompleteAppointmentUseCase completeAppointmentUseCase,
             CancelAppointmentUseCase cancelAppointmentUseCase,
@@ -29,6 +35,9 @@ namespace Appointment.API.Controllers
             _createAppointmentUseCase = createAppointmentUseCase;
             _getAllAppointmentsUseCase = getAllAppointmentsUseCase;
             _getAppointmentUseCase = getAppointmentUseCase;
+            _getAppointmentsByVeterinarianUseCase = getAppointmentsByVeterinarianUseCase;
+            _getAppointmentsByPetUseCase = getAppointmentsByPetUseCase;
+            _getAppointmentsByOwnerUseCase = getAppointmentsByOwnerUseCase;
             _startAppointmentUseCase = startAppointmentUseCase;
             _completeAppointmentUseCase = completeAppointmentUseCase;
             _cancelAppointmentUseCase = cancelAppointmentUseCase;
@@ -70,6 +79,48 @@ namespace Appointment.API.Controllers
             {
                 AppointmentResponseDTO appointment = _getAppointmentUseCase.Run(id);
                 return Ok(appointment);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("veterinarian/{veterinarianId}")]
+        public IActionResult GetByVeterinarian(Guid veterinarianId)
+        {
+            try
+            {
+                List<AppointmentResponseDTO> appointments = _getAppointmentsByVeterinarianUseCase.Run(veterinarianId);
+                return Ok(appointments);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("pet/{petId}")]
+        public IActionResult GetByPet(Guid petId)
+        {
+            try
+            {
+                List<AppointmentResponseDTO> appointments = _getAppointmentsByPetUseCase.Run(petId);
+                return Ok(appointments);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("owner/{ownerId}")]
+        public IActionResult GetByOwner(Guid ownerId)
+        {
+            try
+            {
+                List<AppointmentResponseDTO> appointments = _getAppointmentsByOwnerUseCase.Run(ownerId);
+                return Ok(appointments);
             }
             catch (Exception ex)
             {

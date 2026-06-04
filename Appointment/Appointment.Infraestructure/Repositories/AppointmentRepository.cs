@@ -57,6 +57,13 @@ namespace Appointment.Infrastructure.Repositories
                 .ToList();
         }
 
+        public List<Appointments> GetByOwnerId(Guid ownerId)
+        {
+            return _dataBase.Appo_Appointments
+                .Where(a => a.OwnerId == ownerId)
+                .ToList();
+        }
+
         public void Update(Appointments appointment)
         {
             _dataBase.Appo_Appointments.Update(appointment);
