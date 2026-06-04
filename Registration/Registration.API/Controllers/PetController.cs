@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Registration.Application.DTOs;
 using Registration.Application.DTOs.Response;
 using Registration.Application.UseCases;
@@ -80,11 +80,11 @@ namespace Registration.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
-                _deletePetUseCase.Run(id);
+                await _deletePetUseCase.Run(id);
                 return Ok();
             }
             catch (Exception ex)

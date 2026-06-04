@@ -1,4 +1,4 @@
-﻿using Appointment.Application.DTOs;
+using Appointment.Application.DTOs;
 using Appointment.Application.DTOs.Response;
 using Appointment.Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +16,7 @@ namespace Appointment.API.Controllers
         private readonly CompleteAppointmentUseCase _completeAppointmentUseCase;
         private readonly CancelAppointmentUseCase _cancelAppointmentUseCase;
         private readonly DeleteAppointmentUseCase _deleteAppointmentUseCase;
+        private readonly CheckFutureAppointmentsUseCase _checkUseCase;
 
         public AppointmentController(
             CreateAppointmentUseCase createAppointmentUseCase,
@@ -24,7 +25,8 @@ namespace Appointment.API.Controllers
             StartAppointmentUseCase startAppointmentUseCase,
             CompleteAppointmentUseCase completeAppointmentUseCase,
             CancelAppointmentUseCase cancelAppointmentUseCase,
-            DeleteAppointmentUseCase deleteAppointmentUseCase)
+            DeleteAppointmentUseCase deleteAppointmentUseCase,
+            CheckFutureAppointmentsUseCase checkUseCase)
         {
             _createAppointmentUseCase = createAppointmentUseCase;
             _getAllAppointmentsUseCase = getAllAppointmentsUseCase;
@@ -33,6 +35,7 @@ namespace Appointment.API.Controllers
             _completeAppointmentUseCase = completeAppointmentUseCase;
             _cancelAppointmentUseCase = cancelAppointmentUseCase;
             _deleteAppointmentUseCase = deleteAppointmentUseCase;
+            _checkUseCase = checkUseCase;
         }
 
         [HttpPost]
@@ -131,6 +134,14 @@ namespace Appointment.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+
+        [HttpGet("future-check/{petId}")]
+        public async Task<IActionResult> HasFutureAppointments(Guid petId)
+        {
+            var has = await _checkUseCase.ExecuteAsync(petId);
+            return has ? Ok() : NotFound();
         }
     }
 }

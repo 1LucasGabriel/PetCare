@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Registration.Domain.Interfaces.IRepositories
+namespace Registration.Domain.Interfaces.IServices
 {
     public interface IAppointmentService
     {

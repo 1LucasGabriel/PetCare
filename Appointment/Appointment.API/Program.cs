@@ -20,6 +20,7 @@ builder.Services.AddScoped<DeleteAppointmentUseCase>();
 builder.Services.AddScoped<GetAppointmentUseCase>();
 builder.Services.AddScoped<GetAllAppointmentsUseCase>();
 builder.Services.AddScoped<StartAppointmentUseCase>();
+builder.Services.AddScoped<CheckFutureAppointmentsUseCase>();
 
 builder.Services.AddScoped<DeleteMedicalRecordUseCase>();
 builder.Services.AddScoped<CreateMedicalRecordUseCase>();

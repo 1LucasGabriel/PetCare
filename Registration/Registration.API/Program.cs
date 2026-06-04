@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Registration.Application.UseCases;
 using Registration.Domain.Interfaces.IRepositories;
+using Registration.Domain.Interfaces.IServices;
+using Registration.Infrastructure.ExternalService;
 using Registration.Infrastructure.Persistence;
 using Registration.Infrastructure.Repositories;
 using Scalar.AspNetCore;
@@ -21,8 +23,14 @@ builder.Services.AddScoped<DeleteOwnerUseCase>();
 builder.Services.AddScoped<CreatePetUseCase>();
 builder.Services.AddScoped<GetAllPetsUseCase>();
 builder.Services.AddScoped<GetPetUseCase>();
+
 builder.Services.AddScoped<UpdatePetUseCase>();
 builder.Services.AddScoped<DeletePetUseCase>();
+
+builder.Services.AddHttpClient<IAppointmentService, AppointmentService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["Services:AppointmentApi"] ?? "https://localhost:7001");
+});
 
 builder.Services.AddOpenApi();
 
