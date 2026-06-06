@@ -1,4 +1,4 @@
-﻿using Registration.Application.DTOs.Response;
+using Registration.Application.DTOs.Response;
 using Registration.Domain.Interfaces.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace Registration.Application.UseCases
             var owner = _ownerRepository.GetById(id);
 
             if (owner == null) { 
-                throw new Exception("Owner not found.");
+                throw new Exception("Dono não encontrado.");
             }
 
             return new OwnerResponseDTO(owner.Id, owner.FullName, owner.CPF.Value, owner.Email.Value, owner.Phone);

@@ -12,7 +12,7 @@ namespace Registration.Domain.ValueObjects
         {
             if (string.IsNullOrEmpty(newEmail) || !newEmail.Contains("@"))
             {
-                throw new Exception("Email invalid");
+                throw new Exception("E-mail inválido.");
             }
 
             Value = newEmail;

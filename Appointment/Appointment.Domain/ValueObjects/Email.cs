@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,7 +12,7 @@ namespace Appointment.Domain.ValueObjects
         {
             if (string.IsNullOrEmpty(newEmail) || !newEmail.Contains("@"))
             {
-                throw new Exception("Email invalid");
+                throw new Exception("E-mail inválido.");
             }
 
             Value = newEmail;

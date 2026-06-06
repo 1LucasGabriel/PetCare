@@ -21,7 +21,7 @@ namespace Registration.Application.UseCases
 
             if (owner == null)
             {
-                throw new Exception("Owner not found.");
+                throw new Exception("Dono não encontrado.");
             }
 
             owner.Update(new Email(request.Email), request.Phone, request.Password);

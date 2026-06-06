@@ -24,7 +24,7 @@ namespace Appointment.Application.UseCases
             var vet = _veterinarianRepository.GetById(id);
             if (vet == null)
             {
-                throw new Exception("Veterinarian not found.");
+                throw new Exception("Veterinário não encontrado.");
             }
 
             vet.Update(new Email(request.Email), request.Password, request.Specialties);

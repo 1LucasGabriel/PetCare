@@ -25,7 +25,7 @@ namespace Appointment.Application.UseCases
             var existing = _veterinarianRepository.GetByEmail(new Email(request.Email));
             if (existing != null)
             {
-                throw new Exception("There is already a veterinarian with this email.");
+                throw new Exception("Já existe um veterinário cadastrado com este e-mail.");
             }
 
             var vet = new Veterinarian();

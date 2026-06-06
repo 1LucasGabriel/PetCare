@@ -25,13 +25,13 @@ namespace Registration.Application.UseCases
             Owner? user = _ownerRepository.GetByEmail(new Email(request.Email));
             if (user != null)
             {
-                throw new Exception("There is already a owner with this email.");
+                throw new Exception("Já existe um dono cadastrado com este e-mail.");
             }
 
             Owner? userByCPF = _ownerRepository.GetByCPF(new CPF(request.CPF));
             if (userByCPF != null)
             {
-                throw new Exception("There is already a owner with this CPF.");
+                throw new Exception("Já existe um dono cadastrado com este CPF.");
             }
 
             var newOwner = new Owner(request.FullName, new CPF(request.CPF), new Email(request.Email), request.Password, request.Phone);

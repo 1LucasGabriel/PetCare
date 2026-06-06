@@ -1,4 +1,4 @@
-﻿using Registration.Domain.Interfaces.IRepositories;
+using Registration.Domain.Interfaces.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,12 +19,12 @@ namespace Registration.Application.UseCases
 
             if (owner == null)
             {
-                throw new Exception("Owner not found.");
+                throw new Exception("Dono não encontrado.");
             }
 
             if (owner.Pets != null && owner.Pets.Count > 0)
             {
-                throw new Exception("Cannot delete owner with associated pets.");
+                throw new Exception("Não é possível deletar o dono porque há pets associados a ele.");
             }
 
             _ownerRepository.Delete(id);

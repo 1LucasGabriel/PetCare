@@ -1,4 +1,4 @@
-﻿using Registration.Application.DTOs;
+using Registration.Application.DTOs;
 using Registration.Domain.Interfaces.IRepositories;
 using Registration.Domain.ValueObjects;
 using System;
@@ -21,7 +21,7 @@ namespace Registration.Application.UseCases
 
             if (pet == null)
             {
-                throw new Exception("Pet not found.");
+                throw new Exception("Pet não encontrado.");
             }
 
             pet.Update(request.Name, request.WeightKg, request.IsActive);

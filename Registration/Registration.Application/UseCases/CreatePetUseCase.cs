@@ -1,4 +1,4 @@
-﻿using Registration.Application.DTOs;
+using Registration.Application.DTOs;
 using Registration.Domain.Entities;
 using Registration.Domain.Interfaces.IRepositories;
 using Registration.Domain.ValueObjects;
@@ -27,7 +27,7 @@ namespace Registration.Application.UseCases
             var owner = _ownerRepository.GetById(request.OwnerId);
             if (owner == null)
             {
-                throw new ArgumentException("Owner not found.");
+                throw new ArgumentException("Dono não encontrado.");
             }
 
             var newPet = new Pet();

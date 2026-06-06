@@ -22,13 +22,13 @@ namespace Registration.Application.UseCases
 
             if (pet == null)
             {
-                throw new Exception("Pet not found.");
+                throw new Exception("Pet não encontrado.");
             }
 
             var hasFuture = await _appointmentService.HasFutureAppointmentsAsync(id);
 
             if (hasFuture)
-                throw new Exception("Pet cannot be deleted with future appointments.");
+                throw new Exception("O pet não pode ser deletado porque possui consultas agendadas.");
 
             _petRepository.Delete(id);
         }

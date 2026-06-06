@@ -1,4 +1,4 @@
-﻿using Registration.Domain.Enums;
+using Registration.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,17 +22,17 @@ namespace Registration.Domain.Entities
         {
             if (ownerId == Guid.Empty)
             {
-                throw new ArgumentException("OwnerId cannot be empty.");
+                throw new ArgumentException("O ID do dono não pode estar vazio.");
             }
 
             if (birthDate != null && birthDate > DateTime.UtcNow)
             {
-                throw new ArgumentException("BirthDate cannot be in the future.");
+                throw new ArgumentException("A data de nascimento não pode ser no futuro.");
             }
 
             if (weightKg <= 0)
             {
-                throw new ArgumentException("Weight must be a positive value.");
+                throw new ArgumentException("O peso deve ser um valor positivo.");
             }
 
             Id = Guid.NewGuid();
@@ -50,7 +50,7 @@ namespace Registration.Domain.Entities
         {
             if (weightKg <= 0)
             {
-                throw new ArgumentException("Weight must be a positive value.");
+                throw new ArgumentException("O peso deve ser um valor positivo.");
             }
 
             Name = name;

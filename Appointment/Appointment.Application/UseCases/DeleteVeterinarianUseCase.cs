@@ -20,13 +20,13 @@ namespace Appointment.Application.UseCases
             var vet = _veterinarianRepository.GetById(id);
             if (vet == null)
             {
-                throw new Exception("Veterinarian not found.");
+                throw new Exception("Veterinário não encontrado.");
             }
 
             var appointments = _appointmentRepository.GetByVeterinarianId(id);
             if (appointments != null && appointments.Any())
             {
-                throw new Exception("Cannot delete veterinarian with associated appointments.");
+                throw new Exception("Não é possível deletar o veterinário porque há consultas associadas a ele.");
             }
 
             _veterinarianRepository.Delete(id);
