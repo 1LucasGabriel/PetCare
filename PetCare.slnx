@@ -11,7 +11,4 @@
     <Project Path="registration/Registration.Domain/Registration.Domain.csproj" />
     <Project Path="registration/Registration.Infrastructure/Registration.Infrastructure.csproj" />
   </Folder>
-  <Folder Name="/shared/">
-    <Project Path="shared/PetCare.Shared/PetCare.Shared.csproj" />
-  </Folder>
 </Solution>

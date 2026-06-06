@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Novo Perfil",
+    "Projects": [
+      {
+        "Path": "appointment\\Appointment.API\\Appointment.API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "registration\\Registration.API\\Registration.API.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

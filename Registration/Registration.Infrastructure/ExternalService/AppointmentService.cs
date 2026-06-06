@@ -16,7 +16,7 @@ namespace Registration.Infrastructure.ExternalService
 
         public async Task<bool> HasFutureAppointmentsAsync(Guid petId)
         {
-            var response = await _httpClient.GetAsync($"/appointment/future-check/{petId}");
+            var response = await _httpClient.GetAsync($"/CheckFutureAppointments/{petId}");
             return response.IsSuccessStatusCode;
         }
     }
