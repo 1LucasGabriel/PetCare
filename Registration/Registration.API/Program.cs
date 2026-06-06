@@ -11,6 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
 builder.Services.AddScoped<IPetRepository, PetRepository>();
 
@@ -30,7 +40,7 @@ builder.Services.AddScoped<DeletePetUseCase>();
 
 builder.Services.AddHttpClient<IAppointmentService, AppointmentService>(client =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["Services:AppointmentApi"] ?? "https://localhost:7001");
+    client.BaseAddress = new Uri(builder.Configuration["Services:AppointmentApi"] ?? "http://localhost:5289");
 });
 
 builder.Services.AddOpenApi();
@@ -46,6 +56,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 

@@ -20,7 +20,17 @@ namespace Appointment.Application.UseCases
                 throw new Exception("Consulta não encontrada.");
 
             if (appointment.Status != AppointmentStatus.InProgress)
-                throw new InvalidOperationException($"Não é possível concluir uma consulta com status '{appointment.Status}'. Apenas consultas IN_PROGRESS podem ser concluídas.");
+            {
+                string statusFriendly = appointment.Status switch
+                {
+                    AppointmentStatus.Scheduled => "Pendente",
+                    AppointmentStatus.InProgress => "Em Andamento",
+                    AppointmentStatus.Completed => "Concluída",
+                    AppointmentStatus.Cancelled => "Cancelada",
+                    _ => appointment.Status.ToString()
+                };
+                throw new InvalidOperationException($"Não é possível concluir a consulta porque seu status atual é '{statusFriendly}'. Apenas consultas 'Em Andamento' podem ser concluídas.");
+            }
 
             appointment.Update(
                 appointment.ScheduleStart,

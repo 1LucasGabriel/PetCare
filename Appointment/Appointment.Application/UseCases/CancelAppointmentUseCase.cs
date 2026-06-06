@@ -24,7 +24,17 @@ namespace Appointment.Application.UseCases
                 throw new Exception("Consulta não encontrada.");
 
             if (appointment.Status != AppointmentStatus.Scheduled)
-                throw new InvalidOperationException($"Não é possível cancelar uma consulta com status '{appointment.Status}'. Apenas consultas SCHEDULED podem ser canceladas.");
+            {
+                string statusFriendly = appointment.Status switch
+                {
+                    AppointmentStatus.Scheduled => "Pendente",
+                    AppointmentStatus.InProgress => "Em Andamento",
+                    AppointmentStatus.Completed => "Concluída",
+                    AppointmentStatus.Cancelled => "Cancelada",
+                    _ => appointment.Status.ToString()
+                };
+                throw new InvalidOperationException($"Não é possível cancelar a consulta porque seu status atual é '{statusFriendly}'. Apenas consultas 'Pendente' podem ser canceladas.");
+            }
 
             if (string.IsNullOrWhiteSpace(request.CancelReason))
                 throw new ArgumentException("Motivo do cancelamento é obrigatório.");
