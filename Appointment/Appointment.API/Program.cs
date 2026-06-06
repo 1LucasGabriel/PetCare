@@ -38,7 +38,6 @@ builder.Services.AddScoped<UpdateVeterinarianUseCase>();
 builder.Services.AddScoped<DeleteVeterinarianUseCase>();
 builder.Services.AddScoped<LoginVeterinarianUseCase>();
 
-builder.Services.AddScoped<DeleteMedicalRecordUseCase>();
 builder.Services.AddScoped<CreateMedicalRecordUseCase>();
 builder.Services.AddScoped<GetAllMedicalRecordUseCase>();
 builder.Services.AddScoped<GetMedicalRecordUseCase>();

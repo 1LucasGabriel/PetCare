@@ -1,4 +1,4 @@
-﻿using Appointment.Application.DTOs;
+using Appointment.Application.DTOs;
 using Appointment.Domain.Entities;
 using Appointment.Domain.Enums;
 using Appointment.Domain.Interfaces.IRepositories;
@@ -45,8 +45,6 @@ namespace Appointment.Application.UseCases
             _medicalRecordRepository.Create(medicalRecord);
 
             return medicalRecord.Id;
-
-            //To do: Verfiicar status do appointment, só pode criar o prontuário se a consulta tiver sido concluída
         }
     }
 }
