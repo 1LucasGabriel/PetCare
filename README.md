@@ -33,10 +33,10 @@ O projeto segue as diretrizes do **DDD** e de **Clean Architecture**, dividindo 
 │  [Application / Use Cases]                             │
 │         │                                              │
 │         ▼                                              │
-│  [Domain] (Entidades, Value Objects e Interfaces)     │
+│  [Domain] (Entidades, Value Objects e Interfaces)      │
 │         ▲                                              │
 │         │                                              │
-│  [Infrastructure] (Repositórios e Serviços Externos)  │
+│  [Infrastructure] (Repositórios e Serviços Externos)   │
 └────────────────────────────────────────────────────────┘
 ```
 
