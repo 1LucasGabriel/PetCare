@@ -1,5 +1,7 @@
 using Appointment.Application.UseCases;
+using Appointment.Domain.Interfaces;
 using Appointment.Domain.Interfaces.IRepositories;
+using Appointment.Infrastructure.ExternalService;
 using Appointment.Infrastructure.Persistence;
 using Appointment.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,11 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
+});
+
+builder.Services.AddHttpClient<IRegistrationService, RegistrationService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["Services:RegistrationApi"] ?? "http://localhost:5290");
 });
 
 builder.Services.AddScoped<IMedicalRecordRepository, MedicalRecordRepository>();

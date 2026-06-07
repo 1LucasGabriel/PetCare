@@ -1,7 +1,11 @@
 using Appointment.Application.DTOs;
 using Appointment.Domain.Entities;
 using Appointment.Domain.Enums;
+using Appointment.Domain.Interfaces;
 using Appointment.Domain.Interfaces.IRepositories;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Appointment.Application.UseCases
 {
@@ -9,17 +13,28 @@ namespace Appointment.Application.UseCases
     {
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IVeterinarianRepository _veterinarianRepository;
+        private readonly IRegistrationService _registrationService;
 
-        public CreateAppointmentUseCase(IAppointmentRepository appointmentRepository, IVeterinarianRepository veterinarianRepository)
+        public CreateAppointmentUseCase(
+            IAppointmentRepository appointmentRepository, 
+            IVeterinarianRepository veterinarianRepository,
+            IRegistrationService registrationService)
         {
             _appointmentRepository = appointmentRepository;
             _veterinarianRepository = veterinarianRepository;
+            _registrationService = registrationService;
         }
 
-        public Guid Run(CreateAppointmentDTO request)
+        public async Task<Guid> RunAsync(CreateAppointmentDTO request)
         {
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
+
+            var petExists = await _registrationService.VerifyPetExistsAsync(request.PetId);
+            if (!petExists)
+            {
+                throw new ArgumentException("O Pet informado não existe.");
+            }
 
             var veterinarian = _veterinarianRepository.GetById(request.VeterinarianId);
             if (veterinarian == null)

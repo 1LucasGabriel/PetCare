@@ -16,11 +16,11 @@ namespace Appointment.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateAppointmentDTO request)
+        public async Task<IActionResult> Create([FromBody] CreateAppointmentDTO request)
         {
             try
             {
-                Guid id = _createAppointmentUseCase.Run(request);
+                Guid id = await _createAppointmentUseCase.RunAsync(request);
                 return Ok(id);
             }
             catch (Exception ex)
