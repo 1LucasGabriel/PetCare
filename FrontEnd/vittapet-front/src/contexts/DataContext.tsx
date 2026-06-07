@@ -128,16 +128,39 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       const apptsRes = await fetch(`${APPT_API_URL}/GetAllAppointment`);
       if (apptsRes.ok) {
         const data = await apptsRes.json();
-        setAppointments(data.map((a: any) => ({
-          id: a.id,
-          petId: a.petId,
-          vetId: a.veterinarianId,
-          date: a.scheduledStart ? a.scheduledStart.split('T')[0] : '',
-          time: a.scheduledStart ? a.scheduledStart.split('T')[1].substring(0, 5) : '',
-          reason: a.reason,
-          status: mapStatusIdToString(a.status),
-          notes: a.notes,
-        })));
+        setAppointments(data.map((a: any) => {
+          let dateString = '';
+          let timeString = '';
+          
+          if (a.scheduledStart) {
+            // Se a data não vier com indicação de timezone, adicionamos 'Z' para tratar como UTC
+            const normalized = (a.scheduledStart.endsWith('Z') || a.scheduledStart.includes('+') || a.scheduledStart.match(/-\d{2}:\d{2}$/))
+              ? a.scheduledStart
+              : `${a.scheduledStart}Z`;
+            
+            const localDate = new Date(normalized);
+            
+            const year = localDate.getFullYear();
+            const month = String(localDate.getMonth() + 1).padStart(2, '0');
+            const day = String(localDate.getDate()).padStart(2, '0');
+            dateString = `${year}-${month}-${day}`;
+            
+            const hours = String(localDate.getHours()).padStart(2, '0');
+            const minutes = String(localDate.getMinutes()).padStart(2, '0');
+            timeString = `${hours}:${minutes}`;
+          }
+
+          return {
+            id: a.id,
+            petId: a.petId,
+            vetId: a.veterinarianId,
+            date: dateString,
+            time: timeString,
+            reason: a.reason,
+            status: mapStatusIdToString(a.status),
+            notes: a.notes,
+          };
+        }));
       }
 
       // 5. Carregar Prontuários Médicos
