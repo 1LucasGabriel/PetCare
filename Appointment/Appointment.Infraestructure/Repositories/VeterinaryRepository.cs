@@ -36,6 +36,11 @@ namespace Appointment.Infrastructure.Repositories
         {
             return _dataBase.Appt_Veterinarians.FirstOrDefault(v => v.Email.Value == email.Value);
         }
+ 
+        public Veterinarian? GetByCrmv(string crmv)
+        {
+            return _dataBase.Appt_Veterinarians.FirstOrDefault(v => v.Crmv == crmv);
+        }
 
         public List<Veterinarian> GetAll()
         {

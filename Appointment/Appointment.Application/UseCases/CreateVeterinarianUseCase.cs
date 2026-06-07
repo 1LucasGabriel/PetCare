@@ -27,6 +27,12 @@ namespace Appointment.Application.UseCases
             {
                 throw new Exception("Já existe um veterinário cadastrado com este e-mail.");
             }
+ 
+            var existingByCrmv = _veterinarianRepository.GetByCrmv(request.Crmv);
+            if (existingByCrmv != null)
+            {
+                throw new Exception("Já existe um veterinário cadastrado com este CRMV.");
+            }
 
             var vet = new Veterinarian();
             vet.Create(
