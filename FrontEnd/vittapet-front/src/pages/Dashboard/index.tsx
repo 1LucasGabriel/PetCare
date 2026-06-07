@@ -32,7 +32,7 @@ export default function Dashboard() {
       loadOwners();
       loadPets();
     }
-    loadAppointments();
+    loadAppointments(currentUser?.role, currentUser?.id);
   }, [loadVets, loadOwners, loadPets, loadAppointments, loadOwnerById, currentUser]);
 
   if (!currentUser) return null;

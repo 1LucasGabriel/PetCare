@@ -41,9 +41,9 @@ export default function Appointments() {
       loadPets();
     }
     loadVets();
-    loadAppointments();
+    loadAppointments(currentUser?.role, currentUser?.id);
     loadMedicalRecords();
-  }, [loadPets, loadVets, loadAppointments, loadMedicalRecords, isOwner, currentOwnerId]);
+  }, [loadPets, loadVets, loadAppointments, loadMedicalRecords, isOwner, currentOwnerId, currentUser]);
 
   const filteredPets = isOwner ? pets.filter(p => p.ownerId === currentOwnerId) : pets;
   

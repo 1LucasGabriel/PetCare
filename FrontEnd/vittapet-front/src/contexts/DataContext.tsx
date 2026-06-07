@@ -24,7 +24,7 @@ interface DataContextType {
   loadVets: () => Promise<void>;
   loadOwners: () => Promise<void>;
   loadPets: (ownerId?: string) => Promise<void>;
-  loadAppointments: () => Promise<void>;
+  loadAppointments: (role?: 'vet' | 'owner', id?: string) => Promise<void>;
   loadMedicalRecords: () => Promise<void>;
   loadOwnerById: (id: string) => Promise<void>;
   loadVetById: (id: string) => Promise<void>;
@@ -152,9 +152,15 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const loadAppointments = useCallback(async () => {
+  const loadAppointments = useCallback(async (role?: 'vet' | 'owner', id?: string) => {
     try {
-      const apptsRes = await fetch(`${APPT_API_URL}/GetAllAppointment`);
+      let url = `${APPT_API_URL}/GetAllAppointment`;
+      if (role === 'vet' && id) {
+        url = `${APPT_API_URL}/GetAppointmentsByVet/${id}`;
+      } else if (role === 'owner' && id) {
+        url = `${APPT_API_URL}/GetAppointmentsByOwner/${id}`;
+      }
+      const apptsRes = await fetch(url);
       if (apptsRes.ok) {
         const data = await apptsRes.json();
         setAppointments(data.map((a: any) => {

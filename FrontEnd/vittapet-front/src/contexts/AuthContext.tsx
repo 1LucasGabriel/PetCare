@@ -58,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             loadVets(),
             loadOwnerById(ownerId),
             loadPets(ownerId),
-            loadAppointments(),
+            loadAppointments('owner', ownerId),
             loadMedicalRecords(),
           ]);
           handleLogin({ id: ownerId, role: 'owner', name: data.name, ownerId: ownerId });
@@ -85,7 +85,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (res.ok) {
           const vetId = await res.json(); // GUID gerado
-          await loadAllData();
+          const { loadVets, loadOwners, loadPets, loadAppointments, loadMedicalRecords } = dataCtx;
+          await Promise.all([
+            loadVets(),
+            loadOwners(),
+            loadPets(),
+            loadAppointments('vet', vetId),
+            loadMedicalRecords(),
+          ]);
           handleLogin({ id: vetId, role: 'vet', name: data.name });
         } else {
           const errMsg = await res.text();
