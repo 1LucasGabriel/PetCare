@@ -12,6 +12,7 @@ export interface Vet {
   name: string;
   specialty: string;
   email: string;
+  crmv: string;
   password?: string;
 }
 

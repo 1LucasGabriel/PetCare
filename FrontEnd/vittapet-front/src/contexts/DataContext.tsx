@@ -97,6 +97,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           name: v.fullName,
           specialty: v.specialties && v.specialties.length > 0 ? v.specialties.join(', ') : 'Clínica Geral',
           email: v.email,
+          crmv: v.crmv ?? v.Crmv ?? '00000',
         })));
       }
 

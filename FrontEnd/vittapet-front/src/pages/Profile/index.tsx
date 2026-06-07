@@ -66,7 +66,7 @@ export default function Profile() {
 
   const displayName = isOwner ? ownerRecord?.name : vetRecord?.name;
   const documentLabel = isOwner ? 'CPF' : 'CRMV';
-  const documentValue = isOwner ? ownerRecord?.cpf : (vetRecord as any)?.crmv || '00000';
+  const documentValue = isOwner ? ownerRecord?.cpf : vetRecord?.crmv || '00000';
 
   return (
     <div className="max-w-2xl mx-auto space-y-8">
