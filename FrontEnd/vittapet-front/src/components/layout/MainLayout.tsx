@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Sidebar } from './Sidebar';
-import { Notification } from '../ui/Notification';
 import { useAuth } from '../../hooks/useAuth';
 
 interface MainLayoutProps {
@@ -16,8 +15,6 @@ export function MainLayout({ children }: MainLayoutProps) {
       <Sidebar />
 
       <main className="flex-1 overflow-auto p-8 relative">
-        <Notification />
-
         <motion.div
           key={activeTab}
           initial={{ opacity: 0, x: 10 }}
