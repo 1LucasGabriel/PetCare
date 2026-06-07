@@ -52,6 +52,11 @@ namespace Appointment.Domain.Entities
 
         public void Update(Email email, string password, List<string>? specialties)
         {
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                throw new ArgumentException("A senha não pode estar vazia.");
+            }
+
             Email = email;
             Password = password;
             Specialties = specialties;

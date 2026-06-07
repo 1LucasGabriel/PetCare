@@ -1,4 +1,4 @@
-﻿using Registration.Domain.ValueObjects;
+using Registration.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,6 +34,11 @@ namespace Registration.Domain.Entities
 
         public void Update(Email email, string phone, string password)
         {
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                throw new ArgumentException("A senha não pode estar vazia.");
+            }
+
             Email = email;
             Phone = phone;
             Password = password;
