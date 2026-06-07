@@ -3,6 +3,7 @@ import { User, Dog, Calendar, ShieldCheck } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useData } from '../../hooks/useData';
 import { Appointment, Pet, Owner } from '../../types';
+import { formatDate } from '../../utils/date';
 
 function StatCard({ title, value, icon }: { title: string; value: number; icon: React.ReactNode }) {
   return (
@@ -114,7 +115,7 @@ export default function Dashboard() {
                         <p className="text-xs text-slate-500">Dono(a): <span className="font-medium text-slate-700">{owner?.name || 'Não informado'}</span></p>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm font-bold text-vittagreen">{new Date(app.date).toLocaleDateString('pt-BR')}</p>
+                        <p className="text-sm font-bold text-vittagreen">{formatDate(app.date)}</p>
                         <p className="text-xs font-mono text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">{app.time}</p>
                       </div>
                     </div>
@@ -152,7 +153,7 @@ export default function Dashboard() {
                       <p className="text-[10px] text-slate-400">{app.reason || 'Check-up'}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs font-medium text-slate-500">{new Date(app.date).toLocaleDateString('pt-BR')}</p>
+                      <p className="text-xs font-medium text-slate-500">{formatDate(app.date)}</p>
                       <p className="text-[10px] text-slate-400">{app.time}</p>
                     </div>
                   </div>

@@ -3,6 +3,7 @@ import { Plus, Trash2, AlertCircle, Calendar, FileText, ClipboardList } from 'lu
 import { useAuth } from '../../hooks/useAuth';
 import { useData } from '../../hooks/useData';
 import { Appointment, MedicalRecord } from '../../types';
+import { formatDate } from '../../utils/date';
 
 function getStatusColor(status: Appointment['status']) {
   switch (status) {
@@ -227,7 +228,7 @@ export default function Appointments() {
                     <p className="text-[10px] text-slate-400 italic">{vet?.specialty}</p>
                   </td>
                   <td className="px-6 py-4">
-                    <p className="font-medium">{new Date(a.date).toLocaleDateString('pt-BR')}</p>
+                    <p className="font-medium">{formatDate(a.date)}</p>
                     <p className="text-xs text-slate-400 font-mono">{a.time}</p>
                   </td>
                   <td className="px-6 py-4">
@@ -407,7 +408,7 @@ export default function Appointments() {
                 <div>
                   <span className="block text-xs font-bold text-slate-400 uppercase">Data de Retorno</span>
                   <p className="mt-1 text-slate-800 font-medium">
-                    {new Date(selectedRecord.followUpDate).toLocaleDateString('pt-BR')}
+                    {formatDate(selectedRecord.followUpDate)}
                   </p>
                 </div>
               )}

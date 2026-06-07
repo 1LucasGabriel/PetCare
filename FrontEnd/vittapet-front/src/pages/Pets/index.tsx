@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Plus, Trash2, AlertCircle, Dog, Edit3 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useData } from '../../hooks/useData';
+import { formatDate } from '../../utils/date';
 
 export default function Pets() {
   const { currentUser } = useAuth();
@@ -231,7 +232,7 @@ export default function Pets() {
                 </div>
                 {p.birthDate && (
                   <div className="col-span-2">
-                    <span className="font-medium text-slate-400">Nascimento:</span> {new Date(p.birthDate).toLocaleDateString('pt-BR')}
+                    <span className="font-medium text-slate-400">Nascimento:</span> {formatDate(p.birthDate)}
                   </div>
                 )}
                 {!currentOwnerId && (
