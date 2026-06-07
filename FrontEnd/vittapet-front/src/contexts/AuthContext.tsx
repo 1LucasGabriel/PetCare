@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     if (role === 'owner') {
       try {
-        const res = await fetch('http://localhost:5290/CreateOwner', {
+        const res = await fetch('https://localhost:7204/CreateOwner', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -64,7 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     } else {
       try {
-        const res = await fetch('http://localhost:5289/CreateVeterinarian', {
+        const res = await fetch('https://localhost:7221/CreateVeterinarian', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

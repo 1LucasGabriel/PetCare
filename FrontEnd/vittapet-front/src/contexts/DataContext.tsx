@@ -25,8 +25,8 @@ interface DataContextType {
 
 export const DataContext = createContext<DataContextType | undefined>(undefined);
 
-const REG_API_URL = 'http://localhost:5290';
-const APPT_API_URL = 'http://localhost:5289';
+const REG_API_URL = 'https://localhost:7204';
+const APPT_API_URL = 'https://localhost:7221';
 
 const mapSpeciesIdToString = (id: number): string => {
   switch (id) {
