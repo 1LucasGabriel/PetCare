@@ -27,7 +27,7 @@ namespace Appointment.Application.UseCases
                 throw new Exception("Veterinário não encontrado.");
             }
 
-            string finalPassword = string.IsNullOrWhiteSpace(request.Password) ? vet.Password : request.Password;
+            Password finalPassword = string.IsNullOrWhiteSpace(request.Password) ? vet.Password : new Password(request.Password);
             vet.Update(new Email(request.Email), finalPassword, request.Specialties);
             _veterinarianRepository.Update(vet);
             return true;

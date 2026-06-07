@@ -11,13 +11,13 @@ namespace Appointment.Domain.Entities
         public string FullName { get; private set; }
         public string Crmv { get; private set; }
         public Email Email { get; private set; }
-        public string Password { get; private set; }
+        public Password Password { get; private set; }
         public List<string>? Specialties { get; private set; }
         public bool IsActive { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
 
-        public void Create(string fullName, string crmv, Email email, string password, List<string>? specialties)
+        public void Create(string fullName, string crmv, Email email, Password password, List<string>? specialties)
         {
             if (string.IsNullOrWhiteSpace(fullName))
             {
@@ -34,11 +34,6 @@ namespace Appointment.Domain.Entities
                 throw new ArgumentException("Email não pode estar vazio.");
             }
 
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                throw new ArgumentException("Senha não pode estar vazio.");
-            }
-
             Id = Guid.NewGuid();
             FullName = fullName;
             Crmv = crmv;
@@ -50,13 +45,8 @@ namespace Appointment.Domain.Entities
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public void Update(Email email, string password, List<string>? specialties)
+        public void Update(Email email, Password password, List<string>? specialties)
         {
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                throw new ArgumentException("A senha não pode estar vazia.");
-            }
-
             Email = email;
             Password = password;
             Specialties = specialties;

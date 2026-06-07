@@ -34,7 +34,7 @@ namespace Registration.Application.UseCases
                 throw new Exception("Já existe um dono cadastrado com este CPF.");
             }
 
-            var newOwner = new Owner(request.FullName, new CPF(request.CPF), new Email(request.Email), request.Password, request.Phone);
+            var newOwner = new Owner(request.FullName, new CPF(request.CPF), new Email(request.Email), new Password(request.Password), request.Phone);
 
             return _ownerRepository.Create(newOwner);
         }

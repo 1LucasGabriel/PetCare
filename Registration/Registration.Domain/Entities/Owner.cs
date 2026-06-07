@@ -11,14 +11,14 @@ namespace Registration.Domain.Entities
         public string FullName { get; private set; }
         public CPF CPF { get; private set; }
         public Email Email { get; private set; }
-        public string Password { get; private set; }
+        public Password Password { get; private set; }
         public string Phone { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
 
         public ICollection<Pet> Pets { get; private set; } = new List<Pet>();
 
-        public Owner(string fullName, CPF cpf, Email email, string password, string phone)
+        public Owner(string fullName, CPF cpf, Email email, Password password, string phone)
         {
             Id = Guid.NewGuid();
             FullName = fullName;
@@ -32,13 +32,8 @@ namespace Registration.Domain.Entities
 
         public Owner() { }
 
-        public void Update(Email email, string phone, string password)
+        public void Update(Email email, string phone, Password password)
         {
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                throw new ArgumentException("A senha não pode estar vazia.");
-            }
-
             Email = email;
             Phone = phone;
             Password = password;

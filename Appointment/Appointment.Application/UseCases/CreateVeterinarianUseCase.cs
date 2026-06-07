@@ -33,7 +33,7 @@ namespace Appointment.Application.UseCases
                 request.FullName,
                 request.Crmv,
                 new Email(request.Email),
-                request.Password,
+                new Password(request.Password),
                 request.Specialties
             );
 

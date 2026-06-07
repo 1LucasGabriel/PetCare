@@ -23,7 +23,7 @@ namespace Appointment.Application.UseCases
             }
 
             var vet = _veterinarianRepository.GetByEmail(new Email(request.Email));
-            if (vet == null || vet.Password != request.Password)
+            if (vet == null || vet.Password.Value != request.Password)
             {
                 throw new Exception("E-mail ou senha inválidos.");
             }

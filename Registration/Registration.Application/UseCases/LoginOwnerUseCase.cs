@@ -23,7 +23,7 @@ namespace Registration.Application.UseCases
             }
 
             var owner = _ownerRepository.GetByEmail(new Email(request.Email));
-            if (owner == null || owner.Password != request.Password)
+            if (owner == null || owner.Password.Value != request.Password)
             {
                 throw new Exception("E-mail ou senha inválidos.");
             }

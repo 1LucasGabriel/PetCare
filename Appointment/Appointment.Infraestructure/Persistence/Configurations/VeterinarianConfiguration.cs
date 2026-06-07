@@ -18,7 +18,10 @@ namespace Appointment.Infrastructure.Persistence.Configurations
                 email.Property(e => e.Value).HasColumnName("email").IsRequired().HasMaxLength(256);
             });
 
-            builder.Property(v => v.Password).IsRequired().HasMaxLength(255);
+            builder.OwnsOne(v => v.Password, password =>
+            {
+                password.Property(p => p.Value).HasColumnName("Password").IsRequired().HasMaxLength(255);
+            });
             builder.Property(v => v.Specialties).HasConversion<string>().HasMaxLength(500);
             builder.Property(v => v.CreatedAt).IsRequired();
             builder.Property(v => v.UpdatedAt).IsRequired();

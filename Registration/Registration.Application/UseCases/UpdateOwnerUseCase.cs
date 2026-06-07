@@ -24,7 +24,7 @@ namespace Registration.Application.UseCases
                 throw new Exception("Dono não encontrado.");
             }
 
-            string finalPassword = string.IsNullOrWhiteSpace(request.Password) ? owner.Password : request.Password;
+            Password finalPassword = string.IsNullOrWhiteSpace(request.Password) ? owner.Password : new Password(request.Password);
             owner.Update(new Email(request.Email), request.Phone, finalPassword);
             _ownerRepository.Update(owner);
             return true;
