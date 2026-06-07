@@ -47,10 +47,18 @@ O projeto segue as diretrizes do **DDD** e de **Clean Architecture**, dividindo 
 * **API (Apresentação)**: Controllers REST que recebem requisições HTTP e retornam respostas no formato JSON para o frontend.
 
 ### 🔄 Comunicação entre Bounded Contexts (Integração Limpa)
-Para manter o baixo acoplamento exigido pelo DDD:
-* O contexto de **Cadastro** precisa verificar se um Pet possui consultas futuras antes de permitir a sua exclusão.
-* Em vez de fazer uma consulta direta no banco de dados de outro contexto, a camada de aplicação do Cadastro utiliza a interface `IAppointmentService`.
-* A infraestrutura do Cadastro implementa essa interface através do `AppointmentService.cs` realizando uma chamada HTTP REST para o endpoint `/CheckFutureAppointments/{petId}` no contexto de **Consultas**.
+Para manter o baixo acoplamento exigido pelo DDD, os contextos se comunicam através de chamadas HTTP REST, mantendo a independência de banco de dados e de referências de código:
+
+1. **Exclusão de Pet (Cadastro ➔ Consultas)**:
+   * O contexto de **Cadastro** precisa verificar se um Pet possui consultas futuras antes de permitir a sua exclusão.
+   * A camada de aplicação do Cadastro utiliza a interface `IAppointmentService`.
+   * A infraestrutura do Cadastro implementa essa interface (`AppointmentService.cs`) realizando uma chamada HTTP REST para o endpoint `/CheckFutureAppointments/{petId}` no contexto de **Consultas**.
+
+2. **Agendamento de Consulta (Consultas ➔ Cadastro) com Fallback/Tolerância a Falhas**:
+   * O contexto de **Consultas** precisa validar se o Pet informado no agendamento realmente existe no Cadastro.
+   * A camada de aplicação de Consultas utiliza a interface `IRegistrationService`.
+   * A infraestrutura de Consultas implementa essa interface (`RegistrationService.cs`) fazendo uma chamada HTTP REST para o endpoint `/GetPet/{petId}` na API de **Cadastro**.
+   * **Política de Fallback (Graceful Degradation)**: Para evitar o acoplamento temporal (onde o agendamento pararia de funcionar se o Cadastro estivesse fora do ar), se a API de Cadastro estiver offline, o sistema deixa o agendamento passar com sucesso (confiando na validação prévia do frontend). O agendamento só é bloqueado caso a API de Cadastro responda explicitamente informando que o Pet não existe (retornando erro 400).
 
 ---
 
@@ -90,6 +98,9 @@ Para manter o baixo acoplamento exigido pelo DDD:
 2. A string de conexão padrão em ambos os projetos `appsettings.json` está configurada como:
    `Host=localhost;Port=5432;Database=petcare_db;Username=SEU_USER;Password=SUA_SENHA`
    *Caso a senha ou usuário do seu banco de dados local seja diferente, ajuste essa string nos arquivos `appsettings.json` dos projetos `Registration.API` e `Appointment.API`.*
+3. **Mapeamento de Endereços**: Nos arquivos `appsettings.json` de cada API, certifique-se de que a comunicação síncrona está apontada para a porta correta:
+   * No `Registration.API/appsettings.json`: A chave `Services:AppointmentApi` deve apontar para a URL da API de agendamentos (`http://localhost:5289`).
+   * No `Appointment.API/appsettings.json`: A chave `Services:RegistrationApi` deve apontar para a URL da API de cadastros (`http://localhost:5290`).
 
 ---
 
