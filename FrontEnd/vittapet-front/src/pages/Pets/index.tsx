@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, AlertCircle, Dog, Edit3 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useData } from '../../hooks/useData';
@@ -6,10 +6,20 @@ import { formatDate } from '../../utils/date';
 
 export default function Pets() {
   const { currentUser } = useAuth();
-  const { pets, owners, addPet, updatePet, deletePet } = useData();
+  const { pets, owners, addPet, updatePet, deletePet, loadPets, loadOwners, loadOwnerById } = useData();
 
   const isOwner = currentUser?.role === 'owner';
   const currentOwnerId = currentUser?.ownerId;
+
+  useEffect(() => {
+    if (isOwner && currentOwnerId) {
+      loadPets(currentOwnerId);
+      loadOwnerById(currentOwnerId);
+    } else {
+      loadPets();
+      loadOwners();
+    }
+  }, [loadPets, loadOwners, loadOwnerById, isOwner, currentOwnerId]);
 
   const filteredPets = isOwner ? pets.filter(p => p.ownerId === currentOwnerId) : pets;
 

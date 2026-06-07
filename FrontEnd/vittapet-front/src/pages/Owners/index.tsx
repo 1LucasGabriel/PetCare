@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useData } from '../../hooks/useData';
 
 export default function Owners() {
-  const { owners } = useData();
+  const { owners, loadOwners } = useData();
+
+  useEffect(() => {
+    loadOwners();
+  }, [loadOwners]);
 
   return (
     <div className="space-y-8">

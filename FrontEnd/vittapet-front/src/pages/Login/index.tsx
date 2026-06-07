@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { AlertCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useAuth } from '../../hooks/useAuth';
-import { useData } from '../../hooks/useData';
 // 1. Importe o PNG (ajuste o caminho ../../assets/ se você colocou em outra pasta)
 import logoImg from '../../components/vittapet_logo.png'; 
 
 export default function Login() {
   const { handleLogin, registerAndLogin } = useAuth();
-  const { owners, vets } = useData();
 
   const [role, setRole] = useState<'vet' | 'owner'>('owner');
   const [isRegistering, setIsRegistering] = useState(false);

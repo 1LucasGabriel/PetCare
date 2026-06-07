@@ -28,11 +28,22 @@ const timeSlots = generateTimeSlots();
 
 export default function Appointments() {
   const { currentUser } = useAuth();
-  const { pets, vets, appointments, medicalRecords, addAppointment, deleteAppointment, updateAppointmentStatus, addMedicalRecord } = useData();
+  const { pets, vets, appointments, medicalRecords, addAppointment, deleteAppointment, updateAppointmentStatus, addMedicalRecord, loadPets, loadVets, loadAppointments, loadMedicalRecords } = useData();
 
   const isOwner = currentUser?.role === 'owner';
   const isVet = currentUser?.role === 'vet';
   const currentOwnerId = currentUser?.ownerId;
+
+  useEffect(() => {
+    if (isOwner && currentOwnerId) {
+      loadPets(currentOwnerId);
+    } else {
+      loadPets();
+    }
+    loadVets();
+    loadAppointments();
+    loadMedicalRecords();
+  }, [loadPets, loadVets, loadAppointments, loadMedicalRecords, isOwner, currentOwnerId]);
 
   const filteredPets = isOwner ? pets.filter(p => p.ownerId === currentOwnerId) : pets;
   

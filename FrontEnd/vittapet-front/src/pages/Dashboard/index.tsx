@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { User, Dog, Calendar, ShieldCheck } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useData } from '../../hooks/useData';
@@ -21,7 +21,19 @@ function StatCard({ title, value, icon }: { title: string; value: number; icon: 
 
 export default function Dashboard() {
   const { currentUser } = useAuth();
-  const { vets, owners, pets, appointments } = useData();
+  const { vets, owners, pets, appointments, loadVets, loadOwners, loadPets, loadAppointments, loadOwnerById } = useData();
+
+  useEffect(() => {
+    loadVets();
+    if (currentUser?.role === 'owner') {
+      loadOwnerById(currentUser.id);
+      loadPets(currentUser.id);
+    } else {
+      loadOwners();
+      loadPets();
+    }
+    loadAppointments();
+  }, [loadVets, loadOwners, loadPets, loadAppointments, loadOwnerById, currentUser]);
 
   if (!currentUser) return null;
 

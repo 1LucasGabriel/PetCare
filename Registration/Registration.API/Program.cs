@@ -34,6 +34,7 @@ builder.Services.AddScoped<LoginOwnerUseCase>();
 builder.Services.AddScoped<CreatePetUseCase>();
 builder.Services.AddScoped<GetAllPetsUseCase>();
 builder.Services.AddScoped<GetPetUseCase>();
+builder.Services.AddScoped<GetPetsByOwnerUseCase>();
 
 builder.Services.AddScoped<UpdatePetUseCase>();
 builder.Services.AddScoped<DeletePetUseCase>();

@@ -53,7 +53,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (res.ok) {
           const ownerId = await res.json(); // GUID gerado
-          await loadAllData();
+          const { loadVets, loadOwnerById, loadPets, loadAppointments, loadMedicalRecords } = dataCtx;
+          await Promise.all([
+            loadVets(),
+            loadOwnerById(ownerId),
+            loadPets(ownerId),
+            loadAppointments(),
+            loadMedicalRecords(),
+          ]);
           handleLogin({ id: ownerId, role: 'owner', name: data.name, ownerId: ownerId });
         } else {
           const errMsg = await res.text();

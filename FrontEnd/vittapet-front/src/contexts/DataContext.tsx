@@ -21,6 +21,13 @@ interface DataContextType {
   updateOwnerProfile: (ownerId: string, email: string, phone: string, password?: string) => Promise<void>;
   updateVetProfile: (vetId: string, email: string, password?: string, specialties?: string[]) => Promise<void>;
   loadAllData: () => Promise<void>;
+  loadVets: () => Promise<void>;
+  loadOwners: () => Promise<void>;
+  loadPets: (ownerId?: string) => Promise<void>;
+  loadAppointments: () => Promise<void>;
+  loadMedicalRecords: () => Promise<void>;
+  loadOwnerById: (id: string) => Promise<void>;
+  loadVetById: (id: string) => Promise<void>;
 }
 
 export const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -86,9 +93,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [medicalRecords, setMedicalRecords] = useState<MedicalRecord[]>([]);
 
-  const loadAllData = useCallback(async () => {
+  const loadVets = useCallback(async () => {
     try {
-      // 1. Carregar Veterinários
       const vetsRes = await fetch(`${APPT_API_URL}/GetAllVeterinarian`);
       if (vetsRes.ok) {
         const data = await vetsRes.json();
@@ -100,8 +106,13 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           crmv: v.crmv ?? v.Crmv ?? '00000',
         })));
       }
+    } catch (error) {
+      console.error('Erro ao carregar veterinários:', error);
+    }
+  }, []);
 
-      // 2. Carregar Donos
+  const loadOwners = useCallback(async () => {
+    try {
       const ownersRes = await fetch(`${REG_API_URL}/GetAllOwner`);
       if (ownersRes.ok) {
         const data = await ownersRes.json();
@@ -113,9 +124,15 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           phone: o.phone,
         })));
       }
+    } catch (error) {
+      console.error('Erro ao carregar donos:', error);
+    }
+  }, []);
 
-      // 3. Carregar Pets
-      const petsRes = await fetch(`${REG_API_URL}/GetAllPet`);
+  const loadPets = useCallback(async (ownerId?: string) => {
+    try {
+      const url = ownerId ? `${REG_API_URL}/GetPetsByOwner/${ownerId}` : `${REG_API_URL}/GetAllPet`;
+      const petsRes = await fetch(url);
       if (petsRes.ok) {
         const data = await petsRes.json();
         setPets(data.map((p: any) => ({
@@ -130,8 +147,13 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           age: calculateAge(p.birthDate),
         })));
       }
+    } catch (error) {
+      console.error('Erro ao carregar pets:', error);
+    }
+  }, []);
 
-      // 4. Carregar Consultas
+  const loadAppointments = useCallback(async () => {
+    try {
       const apptsRes = await fetch(`${APPT_API_URL}/GetAllAppointment`);
       if (apptsRes.ok) {
         const data = await apptsRes.json();
@@ -140,7 +162,6 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           let timeString = '';
           
           if (a.scheduledStart) {
-            // Se a data não vier com indicação de timezone, adicionamos 'Z' para tratar como UTC
             const normalized = (a.scheduledStart.endsWith('Z') || a.scheduledStart.includes('+') || a.scheduledStart.match(/-\d{2}:\d{2}$/))
               ? a.scheduledStart
               : `${a.scheduledStart}Z`;
@@ -169,29 +190,93 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
           };
         }));
       }
-
-      // 5. Carregar Prontuários Médicos
-      const mrRes = await fetch(`${APPT_API_URL}/GetAllMedicalRecord`);
-      if (mrRes.ok) {
-        const data = await mrRes.json();
-        setMedicalRecords(data.map((m: any) => ({
-          id: m.id,
-          appointmentId: m.appointmentId,
-          diagnosis: m.diagnosis,
-          treatment: m.treatment,
-          prescriptions: m.prescriptions || [],
-          followUpDate: m.followUpDate ? m.followUpDate.split('T')[0] : undefined,
-          recordedAt: m.recordedAt,
-        })));
-      }
     } catch (error) {
-      console.error('Erro ao conectar com as APIs:', error);
+      console.error('Erro ao carregar consultas:', error);
     }
   }, []);
 
-  useEffect(() => {
-    loadAllData();
-  }, [loadAllData]);
+  const loadMedicalRecords = useCallback(async () => {
+    try {
+      const mrRes = await fetch(`${APPT_API_URL}/GetAllMedicalRecord`);
+      if (mrRes.ok) {
+        const data = await mrRes.json();
+        setMedicalRecords(data.map((m: any) => {
+          const id = m.id ?? m.Id;
+          const appointmentId = m.appointmentId ?? m.AppointmentId;
+          const diagnosis = m.diagnosis ?? m.Diagnosis;
+          const treatment = m.treatment ?? m.Treatment;
+          const prescriptions = m.prescriptions ?? m.Prescriptions ?? [];
+          const followUpDate = m.followUpDate ?? m.FollowUpDate;
+          const recordedAt = m.recordedAt ?? m.RecordedAt;
+          return {
+            id,
+            appointmentId,
+            diagnosis,
+            treatment,
+            prescriptions: prescriptions || [],
+            followUpDate: followUpDate ? followUpDate.split('T')[0] : undefined,
+            recordedAt,
+          };
+        }));
+      }
+    } catch (error) {
+      console.error('Erro ao carregar prontuários:', error);
+    }
+  }, []);
+
+  const loadOwnerById = useCallback(async (id: string) => {
+    try {
+      const res = await fetch(`${REG_API_URL}/GetOwner/${id}`);
+      if (res.ok) {
+        const o = await res.json();
+        const mappedOwner = {
+          id: o.id,
+          name: o.fullName,
+          cpf: o.cpf,
+          email: o.email,
+          phone: o.phone,
+        };
+        setOwners(prev => {
+          const filtered = prev.filter(x => x.id !== id);
+          return [...filtered, mappedOwner];
+        });
+      }
+    } catch (error) {
+      console.error('Erro ao carregar dono por ID:', error);
+    }
+  }, []);
+
+  const loadVetById = useCallback(async (id: string) => {
+    try {
+      const res = await fetch(`${APPT_API_URL}/GetVeterinarian/${id}`);
+      if (res.ok) {
+        const v = await res.json();
+        const mappedVet = {
+          id: v.id,
+          name: v.fullName,
+          specialty: v.specialties && v.specialties.length > 0 ? v.specialties.join(', ') : 'Clínica Geral',
+          email: v.email,
+          crmv: v.crmv ?? v.Crmv ?? '00000',
+        };
+        setVets(prev => {
+          const filtered = prev.filter(x => x.id !== id);
+          return [...filtered, mappedVet];
+        });
+      }
+    } catch (error) {
+      console.error('Erro ao carregar veterinário por ID:', error);
+    }
+  }, []);
+
+  const loadAllData = useCallback(async () => {
+    await Promise.all([
+      loadVets(),
+      loadOwners(),
+      loadPets(),
+      loadAppointments(),
+      loadMedicalRecords(),
+    ]);
+  }, [loadVets, loadOwners, loadPets, loadAppointments, loadMedicalRecords]);
 
   const addOwner = useCallback(async (owner: Omit<Owner, 'id'>) => {
     try {
@@ -209,7 +294,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
       if (res.ok) {
         showNotification('Dono cadastrado com sucesso!');
-        await loadAllData();
+        await loadOwners();
       } else {
         const errMsg = await res.text();
         showNotification(errMsg || 'Erro ao cadastrar dono.', 'error');
@@ -217,7 +302,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       showNotification('Erro de rede ao cadastrar dono.', 'error');
     }
-  }, [loadAllData, showNotification]);
+  }, [loadOwners, showNotification]);
 
   const addPet = useCallback(async (pet: Omit<Pet, 'id'>) => {
     try {
@@ -238,7 +323,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
       if (res.ok) {
         showNotification('Pet cadastrado com sucesso!');
-        await loadAllData();
+        await loadPets();
       } else {
         const errMsg = await res.text();
         showNotification(errMsg || 'Erro ao cadastrar pet.', 'error');
@@ -246,7 +331,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       showNotification('Erro de rede ao cadastrar pet.', 'error');
     }
-  }, [loadAllData, showNotification]);
+  }, [loadPets, showNotification]);
 
   const updatePet = useCallback(async (petId: string, name: string, weightKg: number, isActive: boolean) => {
     try {
@@ -262,7 +347,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
       if (res.ok) {
         showNotification('Pet atualizado com sucesso!');
-        await loadAllData();
+        await loadPets();
       } else {
         const errMsg = await res.text();
         showNotification(errMsg || 'Erro ao atualizar pet.', 'error');
@@ -270,7 +355,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       showNotification('Erro de rede ao atualizar pet.', 'error');
     }
-  }, [loadAllData, showNotification]);
+  }, [loadPets, showNotification]);
 
   const deletePet = useCallback(async (petId: string) => {
     try {
@@ -280,7 +365,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
       if (res.ok) {
         showNotification('Pet removido!');
-        await loadAllData();
+        await loadPets();
       } else {
         const errMsg = await res.text();
         showNotification(errMsg || 'Erro ao remover pet.', 'error');
@@ -288,7 +373,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       showNotification('Erro de rede ao remover pet.', 'error');
     }
-  }, [loadAllData, showNotification]);
+  }, [loadPets, showNotification]);
 
   const addAppointment = useCallback(async (app: Omit<Appointment, 'id' | 'status'>) => {
     try {
@@ -314,7 +399,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
       if (res.ok) {
         showNotification('Consulta agendada!');
-        await loadAllData();
+        await loadAppointments();
       } else {
         const errMsg = await res.text();
         showNotification(errMsg || 'Erro ao agendar consulta.', 'error');
@@ -322,7 +407,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       showNotification('Erro de rede ao agendar consulta.', 'error');
     }
-  }, [pets, loadAllData, showNotification]);
+  }, [pets, loadAppointments, showNotification]);
 
   const addMedicalRecord = useCallback(async (record: Omit<MedicalRecord, 'id' | 'recordedAt'>) => {
     try {
@@ -342,7 +427,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
       if (res.ok) {
         showNotification('Prontuário médico registrado!');
-        await loadAllData();
+        await loadMedicalRecords();
         return true;
       } else {
         const errMsg = await res.text();
@@ -353,7 +438,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       showNotification('Erro de rede ao registrar prontuário médico.', 'error');
       return false;
     }
-  }, [loadAllData, showNotification]);
+  }, [loadMedicalRecords, showNotification]);
 
   const deleteAppointment = useCallback(async (id: string) => {
     try {
@@ -363,7 +448,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
       if (res.ok) {
         showNotification('Consulta cancelada!');
-        await loadAllData();
+        await loadAppointments();
       } else {
         const errMsg = await res.text();
         showNotification(errMsg || 'Erro ao cancelar consulta.', 'error');
@@ -371,7 +456,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       showNotification('Erro de rede ao cancelar consulta.', 'error');
     }
-  }, [loadAllData, showNotification]);
+  }, [loadAppointments, showNotification]);
 
   const updateAppointmentStatus = useCallback(async (id: string, status: Appointment['status']) => {
     try {
@@ -393,7 +478,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
       if (res.ok) {
         showNotification(`Status da consulta atualizado para: ${status}`);
-        await loadAllData();
+        await loadAppointments();
         return true;
       } else {
         const errMsg = await res.text();
@@ -404,7 +489,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       showNotification('Erro de rede ao atualizar consulta.', 'error');
       return false;
     }
-  }, [loadAllData, showNotification, deleteAppointment]);
+  }, [loadAppointments, showNotification, deleteAppointment]);
 
   const updateOwnerProfile = useCallback(async (ownerId: string, email: string, phone: string, password?: string) => {
     try {
@@ -420,7 +505,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
       if (res.ok) {
         showNotification('Perfil atualizado com sucesso!');
-        await loadAllData();
+        await loadOwners();
       } else {
         const errMsg = await res.text();
         showNotification(errMsg || 'Erro ao atualizar perfil.', 'error');
@@ -428,7 +513,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       showNotification('Erro de rede ao atualizar perfil.', 'error');
     }
-  }, [loadAllData, showNotification]);
+  }, [loadOwners, showNotification]);
 
   const updateVetProfile = useCallback(async (vetId: string, email: string, password?: string, specialties?: string[]) => {
     try {
@@ -444,7 +529,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
       if (res.ok) {
         showNotification('Perfil atualizado com sucesso!');
-        await loadAllData();
+        await loadVets();
       } else {
         const errMsg = await res.text();
         showNotification(errMsg || 'Erro ao atualizar perfil.', 'error');
@@ -452,7 +537,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     } catch (error) {
       showNotification('Erro de rede ao atualizar perfil.', 'error');
     }
-  }, [loadAllData, showNotification]);
+  }, [loadVets, showNotification]);
 
   return (
     <DataContext.Provider value={{
@@ -463,6 +548,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       addMedicalRecord,
       updateOwnerProfile, updateVetProfile,
       loadAllData,
+      loadVets, loadOwners, loadPets, loadAppointments, loadMedicalRecords,
+      loadOwnerById, loadVetById
     }}>
       {children}
     </DataContext.Provider>

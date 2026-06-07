@@ -6,11 +6,19 @@ import { useNotification } from '../../hooks/useNotification';
 
 export default function Profile() {
   const { currentUser } = useAuth();
-  const { owners, vets, updateOwnerProfile, updateVetProfile } = useData();
+  const { owners, vets, updateOwnerProfile, updateVetProfile, loadOwnerById, loadVetById } = useData();
   const { showNotification } = useNotification();
 
   const isOwner = currentUser?.role === 'owner';
   const isVet = currentUser?.role === 'vet';
+
+  useEffect(() => {
+    if (isOwner && currentUser?.id) {
+      loadOwnerById(currentUser.id);
+    } else if (isVet && currentUser?.id) {
+      loadVetById(currentUser.id);
+    }
+  }, [isOwner, isVet, currentUser?.id, loadOwnerById, loadVetById]);
 
   // Find detailed user record from context list
   const ownerRecord = isOwner ? owners.find(o => o.id === currentUser?.id) : null;
