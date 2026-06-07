@@ -16,7 +16,7 @@ namespace Registration.Application.UseCases
 
         public List<PetResponseDTO> Run(Guid ownerId)
         {
-            var pets = _petRepository.GetAll().FindAll(pet => pet.OwnerId == ownerId);
+            var pets = _petRepository.GetByOwnerId(ownerId);
             return pets.ConvertAll(pet => new PetResponseDTO(pet.Id, pet.OwnerId, pet.Name, pet.Species, pet.Breed, pet.BirthDate, pet.WeightKg, pet.IsActive));
         }
     }

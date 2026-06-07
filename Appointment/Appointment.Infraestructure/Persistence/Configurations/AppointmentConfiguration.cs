@@ -24,16 +24,9 @@ namespace Appointment.Infrastructure.Persistence.Configurations
             builder.Property(a => a.CreatedAt).IsRequired();
             builder.Property(a => a.UpdatedAt).IsRequired();
 
-            builder.HasOne(a => a.Veterinarian)
-                .WithMany()
-                .HasForeignKey(a => a.VeterinarianId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(a => a.Veterinarian).WithMany().HasForeignKey(a => a.VeterinarianId).OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(a => a.MedicalRecord)
-                .WithOne()
-                .HasForeignKey<MedicalRecord>(m => m.AppointmentId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .IsRequired(false);
+            builder.HasOne(a => a.MedicalRecord).WithOne().HasForeignKey<MedicalRecord>(m => m.AppointmentId).OnDelete(DeleteBehavior.Cascade).IsRequired(false);
         }
     }
 }

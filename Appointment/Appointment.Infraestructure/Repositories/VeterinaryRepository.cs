@@ -1,5 +1,6 @@
 using Appointment.Domain.Entities;
 using Appointment.Domain.Interfaces.IRepositories;
+using Appointment.Domain.ValueObjects;
 using Appointment.Infrastructure.Persistence;
 
 namespace Appointment.Infrastructure.Repositories
@@ -32,7 +33,7 @@ namespace Appointment.Infrastructure.Repositories
             return _dataBase.Appt_Veterinarians.FirstOrDefault(v => v.Id == id);
         }
 
-        public Veterinarian? GetByEmail(Appointment.Domain.ValueObjects.Email email)
+        public Veterinarian? GetByEmail(Email email)
         {
             return _dataBase.Appt_Veterinarians.FirstOrDefault(v => v.Email.Value == email.Value);
         }

@@ -30,31 +30,22 @@ namespace Appointment.Infrastructure.Repositories
 
         public AppointmentEntity? GetById(Guid id)
         {
-            return _dataBase.Appt_Appointment
-                .Include(a => a.Veterinarian)
-                .Include(a => a.MedicalRecord)
-                .FirstOrDefault(a => a.Id == id);
+            return _dataBase.Appt_Appointment.Include(a => a.Veterinarian).Include(a => a.MedicalRecord).FirstOrDefault(a => a.Id == id);
         }
 
         public List<AppointmentEntity> GetAll()
         {
-            return _dataBase.Appt_Appointment
-                .Include(a => a.Veterinarian)
-                .ToList();
+            return _dataBase.Appt_Appointment.Include(a => a.Veterinarian).ToList();
         }
 
         public List<AppointmentEntity> GetByVeterinarianId(Guid veterinarianId)
         {
-            return _dataBase.Appt_Appointment
-                .Where(a => a.VeterinarianId == veterinarianId)
-                .ToList();
+            return _dataBase.Appt_Appointment.Where(a => a.VeterinarianId == veterinarianId).ToList();
         }
 
         public List<AppointmentEntity> GetByPetId(Guid petId)
         {
-            return _dataBase.Appt_Appointment
-                .Where(a => a.PetId == petId)
-                .ToList();
+            return _dataBase.Appt_Appointment.Where(a => a.PetId == petId).ToList();
         }
 
         public void Update(AppointmentEntity appointment)

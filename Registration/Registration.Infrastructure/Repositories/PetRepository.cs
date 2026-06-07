@@ -1,8 +1,9 @@
-﻿using Registration.Domain.Entities;
+using Registration.Domain.Entities;
 using Registration.Domain.Interfaces.IRepositories;
 using Registration.Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Registration.Infrastructure.Repositories
@@ -47,6 +48,11 @@ namespace Registration.Infrastructure.Repositories
         public List<Pet> GetAll()
         {
             return _dataBase.Reg_Pets.ToList();
+        }
+
+        public List<Pet> GetByOwnerId(Guid ownerId)
+        {
+            return _dataBase.Reg_Pets.Where(p => p.OwnerId == ownerId).ToList();
         }
 
         public Pet GetById(Guid id)

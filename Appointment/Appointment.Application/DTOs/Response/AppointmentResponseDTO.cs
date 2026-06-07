@@ -20,19 +20,7 @@ namespace Appointment.Application.DTOs.Response
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
-        public AppointmentResponseDTO(
-            Guid id,
-            Guid petId,
-            Guid ownerId,
-            Guid veterinarianId,
-            DateTime scheduledStart,
-            DateTime scheduledEnd,
-            AppointmentStatus status,
-            string reason,
-            string? notes,
-            string? cancelReason,
-            DateTime createdAt,
-            DateTime updatedAt)
+        public AppointmentResponseDTO(Guid id, Guid petId, Guid ownerId, Guid veterinarianId, DateTime scheduledStart, DateTime scheduledEnd, AppointmentStatus status, string reason, string? notes, string? cancelReason, DateTime createdAt, DateTime updatedAt)
         {
             Id = id;
             PetId = petId;
