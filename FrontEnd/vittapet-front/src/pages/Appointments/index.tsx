@@ -89,8 +89,12 @@ export default function Appointments() {
       .map(line => line.trim())
       .filter(line => line.length > 0);
 
+    // Concluir a consulta no microsserviço primeiro
+    const statusUpdated = await updateAppointmentStatus(showRecordModal, 'Concluído');
+    if (!statusUpdated) return;
+
     // Salvar o prontuário no microsserviço de agendamento
-    await addMedicalRecord({
+    const recordAdded = await addMedicalRecord({
       appointmentId: showRecordModal,
       diagnosis,
       treatment,
@@ -98,15 +102,14 @@ export default function Appointments() {
       followUpDate: followUpDate || undefined,
     });
 
-    // Concluir a consulta no microsserviço
-    await updateAppointmentStatus(showRecordModal, 'Concluído');
-
-    // Fechar modal e resetar form
-    setShowRecordModal(null);
-    setDiagnosis('');
-    setTreatment('');
-    setPrescriptionsText('');
-    setFollowUpDate('');
+    if (recordAdded) {
+      // Fechar modal e resetar form
+      setShowRecordModal(null);
+      setDiagnosis('');
+      setTreatment('');
+      setPrescriptionsText('');
+      setFollowUpDate('');
+    }
   };
 
   return (

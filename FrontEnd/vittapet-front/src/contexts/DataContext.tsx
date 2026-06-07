@@ -15,9 +15,9 @@ interface DataContextType {
   updatePet: (petId: string, name: string, weightKg: number, isActive: boolean) => Promise<void>;
   deletePet: (petId: string) => Promise<void>;
   addAppointment: (app: Omit<Appointment, 'id' | 'status'>) => Promise<void>;
-  updateAppointmentStatus: (id: string, status: Appointment['status']) => Promise<void>;
+  updateAppointmentStatus: (id: string, status: Appointment['status']) => Promise<boolean>;
   deleteAppointment: (id: string) => Promise<void>;
-  addMedicalRecord: (record: Omit<MedicalRecord, 'id' | 'recordedAt'>) => Promise<void>;
+  addMedicalRecord: (record: Omit<MedicalRecord, 'id' | 'recordedAt'>) => Promise<boolean>;
   updateOwnerProfile: (ownerId: string, email: string, phone: string, password?: string) => Promise<void>;
   updateVetProfile: (vetId: string, email: string, password?: string, specialties?: string[]) => Promise<void>;
   loadAllData: () => Promise<void>;
@@ -342,42 +342,15 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       if (res.ok) {
         showNotification('Prontuário médico registrado!');
         await loadAllData();
+        return true;
       } else {
         const errMsg = await res.text();
         showNotification(errMsg || 'Erro ao registrar prontuário médico.', 'error');
+        return false;
       }
     } catch (error) {
       showNotification('Erro de rede ao registrar prontuário médico.', 'error');
-    }
-  }, [loadAllData, showNotification]);
-
-  const updateAppointmentStatus = useCallback(async (id: string, status: Appointment['status']) => {
-    try {
-      let endpoint = '';
-      if (status === 'Em Andamento') {
-        endpoint = `${APPT_API_URL}/StartAppointment/${id}`;
-      } else if (status === 'Concluído') {
-        endpoint = `${APPT_API_URL}/CompleteAppointment/${id}`;
-      } else if (status === 'Cancelado') {
-        await deleteAppointment(id);
-        return;
-      } else {
-        return;
-      }
-
-      const res = await fetch(endpoint, {
-        method: 'PATCH',
-      });
-
-      if (res.ok) {
-        showNotification(`Status da consulta atualizado para: ${status}`);
-        await loadAllData();
-      } else {
-        const errMsg = await res.text();
-        showNotification(errMsg || 'Erro ao atualizar status da consulta.', 'error');
-      }
-    } catch (error) {
-      showNotification('Erro de rede ao atualizar consulta.', 'error');
+      return false;
     }
   }, [loadAllData, showNotification]);
 
@@ -398,6 +371,39 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       showNotification('Erro de rede ao cancelar consulta.', 'error');
     }
   }, [loadAllData, showNotification]);
+
+  const updateAppointmentStatus = useCallback(async (id: string, status: Appointment['status']) => {
+    try {
+      let endpoint = '';
+      if (status === 'Em Andamento') {
+        endpoint = `${APPT_API_URL}/StartAppointment/${id}`;
+      } else if (status === 'Concluído') {
+        endpoint = `${APPT_API_URL}/CompleteAppointment/${id}`;
+      } else if (status === 'Cancelado') {
+        await deleteAppointment(id);
+        return true;
+      } else {
+        return false;
+      }
+
+      const res = await fetch(endpoint, {
+        method: 'PATCH',
+      });
+
+      if (res.ok) {
+        showNotification(`Status da consulta atualizado para: ${status}`);
+        await loadAllData();
+        return true;
+      } else {
+        const errMsg = await res.text();
+        showNotification(errMsg || 'Erro ao atualizar status da consulta.', 'error');
+        return false;
+      }
+    } catch (error) {
+      showNotification('Erro de rede ao atualizar consulta.', 'error');
+      return false;
+    }
+  }, [loadAllData, showNotification, deleteAppointment]);
 
   const updateOwnerProfile = useCallback(async (ownerId: string, email: string, phone: string, password?: string) => {
     try {
